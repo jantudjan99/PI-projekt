@@ -12,7 +12,7 @@
       <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">		
         
         <div class="navbar-nav">
-          <router-link to="/pocetna" class="razmakni active"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Naslovna</span></router-link>
+          <router-link to="/pocetna" class="razmakni active"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></router-link>
           <router-link to="/kupi_prodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj_.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></router-link>
           <router-link to="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></router-link>
           <router-link to="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></router-link>
