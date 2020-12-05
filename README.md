@@ -1,6 +1,6 @@
 Naziv aplikacije: CafeTell
 
-Tim: Leonarda Milevoj, Barbara Željeznik, Jan Tuđan
+Tim 12: Leonarda Milevoj, Barbara Željeznik, Jan Tuđan
 
 Fakultet informatike u Puli: https://fipu.unipu.hr/
 
