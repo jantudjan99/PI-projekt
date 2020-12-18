@@ -12,13 +12,14 @@
       <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">		
         
         <div class="navbar-nav">
-          <router-link to="/pocetna" class="razmakni active"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></router-link>
-          <router-link to="/kupi_prodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj_.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></router-link>
-          <router-link to="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></router-link>
-          <router-link to="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></router-link>
-          <router-link to="/onama" class="razmakni"><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></router-link>
-          <router-link router-link to="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></router-link>		
-          
+          <a href="/pocetna" class="razmakni activee"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
+          <a href="/kupi_prodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj_.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
+          <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
+          <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
+          <a href="/onama" class="razmakni"><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
+          <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
+          <a href="/odjava" class="razmakni desno"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
+		 	
         <!--<div class="nav-item dropdown">
             <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="https://www.tutorialrepublic.com/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno <b class="caret"></b></a>
             <div class="dropdown-menu">
@@ -50,7 +51,7 @@
 	border-radius: 0;
 	border: none;
   	box-shadow: 0 0 4px rgba(0,0,0,.1);
-  
+  	font-family: 'Playfair Display', serif;
 }
 .navbar .ikone {
 	border-radius: 50%;
@@ -62,10 +63,14 @@
 	color: #efe5ff;
 	padding-left: 0px;
 	padding-right: 50px;
-	font-size: 24px;		
+	font-size: 24px;
+	
+		
 }
 .navbar-nav{
 	padding-left:25px;
+	flex-grow:1;
+	
 }
 .navbar .navbar-brand:hover, .navbar .navbar-brand:focus {
   color: #fff;
@@ -94,12 +99,12 @@
 .navbar .navbar-nav > a {
 	color: #efe5ff;
 	padding: 8px 15px;
-  font-size: 14px;	
+  font-size: 18px;	
   
 }
 .navbar .navbar-nav > a:hover, .navbar .navbar-nav > a:focus {
-	color: #fff;
-	text-shadow: 0 0 4px rgba(255,255,255,0.3);
+	color: #A43323;
+	text-decoration:none;
 }
 .navbar .navbar-nav > a > i {
 	display: block;
@@ -150,9 +155,9 @@
 .navbar .navbar-toggle .icon-bar {
 	background: #fff;
 }
-.navbar .navbar-toggle:focus, .navbar .navbar-toggle:hover {
+/*.navbar .navbar-toggle:focus, .navbar .navbar-toggle:hover {
 	
-}
+}*/
 .navbar .navbar-nav .open .dropdown-menu {
 	background: #faf7fd;
 	border-radius: 1px;
@@ -200,7 +205,7 @@
 }
 
 .razmakni{
-  margin-right: 80px;
+  margin-left: 5px;
   display:inline-flex;
   
 }
@@ -211,7 +216,7 @@
 	border-radius: 50%;
 	width: 120px;
 	height: 45px;
-	margin-right: 15px;
+	margin-right: 10px;
 }
 .tekst_ikone{
 	display:inline-block;
@@ -219,7 +224,7 @@
 	margin-top:8px;
 }
 .pocetna {
-  background-image: url("/assets/pocetna.jpg");
+  background-image: url("/assets/pozadina.jpg");
   background-size:cover;
   background-repeat: no-repeat;
   min-width:100%;
@@ -229,5 +234,11 @@
   -moz-background-size: cover;
   -o-background-size: cover;
 }
-
+.activee{
+	color: #A43323;
+}
+.desno {
+	right:0%;
+	position:fixed;
+}
 </style>
