@@ -13,12 +13,12 @@
         
         <div class="navbar-nav">
           <a href="/pocetna" class="razmakni activee"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
-          <a href="/kupi_prodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj_.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
+          <a href="/kupi_prodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
           <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
           <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
           <a href="/onama" class="razmakni"><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
           <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
-          <a href="/odjava" class="razmakni desno"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
+          <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
 		 	
         <!--<div class="nav-item dropdown">
             <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="https://www.tutorialrepublic.com/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno <b class="caret"></b></a>
@@ -40,6 +40,42 @@
   </div>
 </template>
 
+<script>
+ import store from '@/store'; 
+ import { firebase } from '@/firebase';
+ import router from '@/router';
+
+  
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+	  console.log("****",user.email);
+	  store.currentUser=user.email;
+    } else {
+	  console.log('**** Nema korisnika');
+	  store.currentUser=null;
+	  
+	if (router.name !== "prijava") {
+		router.push({ name:"prijava"})
+	}
+     }
+  });
+
+  export default {
+  name:'app',
+  data () {
+    return {
+      store,
+   };
+  },
+  methods: {
+    odjava() {
+      firebase.auth().signOut().then(() =>{
+		this.$router.push({ name: 'prijava' })
+	  })
+    },
+  },
+};
+</script>
 
 
 <style>
@@ -211,6 +247,7 @@
 }
 .ikone{
   display: inline-block;
+
 }
 .logo{
 	border-radius: 50%;
@@ -239,6 +276,6 @@
 }
 .desno {
 	right:0%;
-	position:fixed;
+	position:absolute;
 }
 </style>
