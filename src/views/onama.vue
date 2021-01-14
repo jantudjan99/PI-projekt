@@ -13,26 +13,25 @@
         
         <div class="navbar-nav">
           <a href="/pocetna" class="razmakni"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
-          <a href="/kupi_prodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj_.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
+          <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
           <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
           <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
-          <a href="/onama" class="razmakni activee"><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
+          <a href ="/onama" class="razmakni activee" v-class=" { active:isActive }" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
           <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
-		  <a href="/odjava" class="razmakni desno"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>		
+		      <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
       </div>
-
-
       </div>
     
 
   </nav>
     </div>
-	
+	<!-- dodatna klasa -->
+	<div class="sakrij">
 	<h1 class="naslov">Što je CafeTell?</h1>
 	<p class="onama1">Cafetell, aplikacija namijenjena za vlasnike kafića koja je osnovana 2020. godine od 
 		 strane skupine studenata Fakulteta Informatike u Puli.
 		 Služi za kupnju/prodaju određenih proizvoda, recenzija usluga i proizvoda s kojima se susreću 
-		 tokom poslovanja te za dijeljenje savjeta za bolju učinkovitost i rada u kafiću. </p>
+		 tokom poslovanja te za dijeljenje savjeta za bolju učinkovitost i rad u kafiću. </p>
 	<h1 class="naslov2">Naš tim</h1>
 	<div class="tim">
 		<p class ="onama2"> Mi smo tim studenata koji pohađa preddiplomski studij 
@@ -44,22 +43,99 @@
         Zašto smo baš mi dobar tim?<br>
         Zato jer su potrebne različite vještine za postizanje uspjeha te pozitivno 
         okruženje što se jako dobro odrazilo na naš tim i uspjeh. </p>
+
+	</div>
+	
+
+	<!-- Bootstrap -->
+
+	
+	<div class="container mt-100 mt-60">
+    
+
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2 kutija">
+            <div class="mt-4 pt-2">
+                <div class="team position-relative d-block text-center">
+                    <div class="image position-relative d-block overflow-hidden">
+                        <img src="assets/barb.jpg" class="img-fluid rounded barb" alt="">
+                        <div class="overlay rounded bg-dark"></div>
+                    </div>
+                    <div class="content py-2 member-position bg-white border-bottom overflow-hidden rounded d-inline-block">
+                        <h4 class="title mb-0">Barbara</h4>
+                    </div>
+                </div>
+            </div>
+			
+        </div><!--end col-->
+        	
+
+        <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2 kutija">
+            <div class="mt-4 pt-2">
+                <div class="team position-relative d-block text-center">
+                    <div class="image position-relative d-block overflow-hidden">
+                        <img src="assets/lu.jpg" class="img-fluid rounded lu" alt="">
+                        <div class="overlay rounded bg-dark"></div>
+                    </div>
+                    <div class="content py-2 member-position bg-white border-bottom overflow-hidden rounded d-inline-block">
+                        <h4 class="title mb-0">Leonarda</h4>
+                    </div>
+					
+                </div>
+            </div>
+			
+        </div><!--end col-->
+        
+
+        <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2 kutija">
+            <div class="mt-4 pt-2">
+                <div class="team position-relative d-block text-center">
+                    <div class="image position-relative d-block overflow-hidden">
+                        <img src="assets/jan.jpg" class="img-fluid rounded jan" alt="">
+                        <div class="overlay rounded bg-dark"></div>
+                    </div>
+                    <div class="content py-2 member-position bg-white border-bottom overflow-hidden rounded d-inline-block">
+                        <h4 class="title mb-0">Jan</h4>
+                    </div>
+                </div>
+            </div>
+			
+        </div><!--end col-->	
 		
-	
-	<div class="mi">	
-	    <img class="lu" src="/assets/lu.jpg">
-		<img class="jan" src="/assets/jan.jpg"> 
-		<img class="barb" src="/assets/barb.jpg">
+		</div><!--end row-->
+		
 	</div>
-	</div>
-  </div>
 	
-   </div>
+	<br><br>
+	</div>
+    </div>
+	
+    </div>
 
 
 </template>
 
+<script>
+ import store from '@/store'; 
+ import { firebase } from '@/firebase';
+ import router from '@/router';
 
+  export default {
+  name:'app',
+  data () {
+    return {
+      store,
+   };
+  },
+  methods: {
+    odjava() {
+      firebase.auth().signOut().then(() =>{
+		this.$router.push({ name: 'prijava' })
+	  })
+    },
+  },
+};
+</script>
 
 <style>
   .navbar {
@@ -226,6 +302,7 @@
   display: inline-block;
 }
 .logo{
+	
 	border-radius: 50%;
 	width: 120px;
 	height: 45px;
@@ -241,7 +318,7 @@
   background-size:cover;
   background-repeat: no-repeat;
   min-width:100%;
-  height:100%;
+  min-height:100%;
   position:absolute;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -251,12 +328,15 @@
 .krem {
     background-color:#f0ead6;
     width: 80%;
-    height: 100%;
+    min-height: 100%;
     position: absolute;
     margin-left:10%;
 }
-.activee{
+
+.activee:active{
 	color: #A43323;
+
+
 }
 
 .naslov {
@@ -285,6 +365,7 @@ margin-top: 3%;
 font-family: 'Playfair Display', serif;
 color:rgba(0, 0, 0, 0.733);	
 }
+
 
 .onama2 {
 font-size: 20px;
@@ -321,20 +402,152 @@ border:1px;
 }
 
 .barb { 
-height: 170px;
-display: block;
-width:66%;
-padding:2px;
-margin:auto;
-border:1px;
+  height: 170px;
+  display: block;
+  width:66%;
+  padding:2px;
+  margin:auto;
+  border:1px;
 }
 
 .mi {
-position: relative;
-margin-right:1%;
+  position: relative;
+  margin-right:1%;
 }
+
 .desno {
 	right:0%;
-	position:fixed;
+	position:absolute;
+}
+
+/* bootstrap */
+
+.team-list img {
+  width: 50%;
+}
+
+.team-list .content {
+  width: 50%;
+}
+
+.team-list .content .follow {
+  position: absolute;
+  bottom: 24px;
+}
+
+.team-list:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.team, .team-list {
+  -webkit-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+}
+
+.team .content .title, .team-list .content .title {
+  font-size: 18px;
+}
+
+.team .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.team .member-position, .team .team-social {
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+  left: 0;
+  margin: auto 10%;
+  z-index: 99;
+}
+
+.team .team-social {
+  bottom: 40px;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+}
+
+.team:hover {
+  -webkit-transform: translateY(-7px);
+          transform: translateY(-7px);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.team:hover .overlay {
+  opacity: 0.6;
+}
+
+.team:hover .team-social {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .team-list img,
+  .team-list .content {
+    width: 100%;
+    float: none !important;
+  }
+  .team-list img .follow,
+  .team-list .content .follow {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+.list-inline-item:not(:last-child) {
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+.rounded {
+  border-radius: 5px !important;
+}
+
+.social-icon.social li a {
+    color: #adb5bd;
+    border-color: #adb5bd;
+}
+
+/*.social-icon li a {
+    color: #35404e;
+    border: 1px solid #35404e;
+    display: inline-block;
+    height: 32px;
+    text-align: center;
+    font-size: 15px;
+    width: 32px;
+    line-height: 30px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    position: relative;
+}*/
+.row{
+	position:relative;
+}
+.bg-white{
+	position:absolute;
+}
+/*a {
+    text-decoration: none !important;
+}*/
+
+.test{
+	position:relative;
+}
+.sakrij{
+	overflow:hidden;
+	
 }
 </style>
+
