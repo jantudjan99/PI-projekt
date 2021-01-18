@@ -538,9 +538,6 @@ border:1px;
 .bg-white{
 	position:absolute;
 }
-/*a {
-    text-decoration: none !important;
-}*/
 
 .test{
 	position:relative;
