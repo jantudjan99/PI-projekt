@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Prijava from '../views/prijava.vue'
+import Prva from '../views/prva.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Prijava',
-    component: Prijava
+    name: 'prva',
+    component: Prva
   },
+
   {
     path: '/registracija',
     name: 'registracija',
@@ -24,11 +25,56 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/pocetna.vue')
-  }
+  },
+  {
+  path: '/onama',
+  name: 'onama',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../views/onama.vue')
+},
   
+{
+  path: '/prijava',
+  name: 'prijava',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../views/prijava.vue')
+},
+
+{
+  path: '/kupiprodaj',
+  name: 'kupiprodaj',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../views/kupiprodaj.vue')
+},
+
+{
+  path: '/recenzije',
+  name: 'recenzije',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../views/recenzije.vue')
+},
+
+{
+  path: '/tips_tricks',
+  name: 'tips_tricks',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../views/recenzije.vue')
+}
+
 ]
 
 const router = new VueRouter({
+  linkActiveClass:'is-active',
   mode: 'history',
   base: process.env.BASE_URL,
   routes
