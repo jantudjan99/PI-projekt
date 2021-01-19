@@ -12,23 +12,28 @@
        <div class="form-group">
           <label class="forma" for="email">Email</label> <br><br>
           <input v-model="email" type="text" class="form-control" id="name" aria-describedby="emailHelp"  ><br><br> 
-
        </div>
-       <br>
+       <br> 
        <div class="form-group">
-          <label class="forma" for="passwordField">Lozinka</label> <br><br>
-          <input v-model="lozinka" type="password" class="form-control" id="pass"><br><br>  
-       </div> <br> 
+          <label class="forma" for="passwordField">Lozinka</label> 
+          <br><br>
+          <div class="skup">
+          
+            <input v-model="lozinka" type="password" class="form-control"  id="password"> 
+          
+          </div>
+      </div>
+       </div> <br> <br> <br>
        <div class="form-group">
-       <button type="button" @click="login()" class="prijava" id="submit">Prijava</button>
+      <a> <button type="button" @click="login()" class="prijava" id="submit">Prijava</button > </a>
        <br>
       <span id="Required"></span>
        
        <a href="/registracija" class="NR" to="/registracija"><h5>Niste registrirani?</h5></a>
        </div>
-       </div>
-       </form>
-      </div>
+       
+      </form>
+    </div>
        </div>
 
 </template>
@@ -37,10 +42,10 @@
 jQuery(document).ready(function($){
             $("#submit").click(function(){
                 var name= $("#name").val();
-                var pass = $("#pass").val();
-                if(name == '' || pass == ''){
+                var password = $("#password").val();
+                if(name == '' || password == ''){
                     $("#Required").html("Polja su prazna!").css("color","red");
-                }else if(name == "admin" && pass == "123"){
+                }else if(name == "admin" && password == "123"){
                      $("#form").html('<h4>User Login Successfully</h4><a href="">Back</a>').css('color','green');
                 }else{
                      $("#error").html("User Are Not Valid");
@@ -77,7 +82,71 @@ export default {
       });
     }
   }
-}
+};
+
+(($) => {
+
+  class Toggle {
+
+    constructor(element, options) {
+
+      this.defaults = {
+        icon: 'fa-eye'
+      };
+
+      this.options = this.assignOptions(options);
+
+      this.$element = element;
+      this.$button = $(`<button class="btn-toggle-pass"><i class="fa ${this.options.icon}"></i></button>`);
+
+      this.init();
+    };
+
+    assignOptions(options) {
+
+      return $.extend({}, this.defaults, options);
+    }
+
+    init() {
+
+      this._appendButton();
+      this.bindEvents();
+    }
+
+    _appendButton() {
+      this.$element.after(this.$button);
+    }
+
+    bindEvents() {
+
+      this.$button.on('click touchstart', this.handleClick.bind(this));
+    }
+
+    handleClick() {
+
+      let type = this.$element.attr('type');
+
+      type = type === 'password' ? 'text' : 'password';
+
+      this.$element.attr('type', type);
+      this.$button.toggleClass('active');
+    }
+  }
+
+  $.fn.togglePassword = function (options) {
+    return this.each(function () {
+      new Toggle($(this), options);
+    });
+  }
+
+})(jQuery);
+
+$(document).ready(function() {
+  $('#password').togglePassword();
+  $('#password-custom').togglePassword({
+  	'icon': 'fa-lock'
+  });
+}) 
 
 </script> 
 
@@ -86,17 +155,22 @@ export default {
 <style>
 .form-control  {
   border:none;
-  border-bottom:1px solid;
   font-size:1.4em;
+  border-bottom:1px solid;
   display:block;
   width:100%;
   border-radius:0px;
   border-color:black;
+  position: relative;
 }
 .form-control:focus{
-  border-color: #c73500a6;
-  box-shadow: 0 0 0 2px #c73500a6;
-  caret-color: black;
+  outline:none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color:#c73500a6;
+    caret-color:#c73500a6;
 }
 
 button:focus {
@@ -159,6 +233,7 @@ color:black;
    right: 0px;
    height: 100%;
    font-family: 'Playfair Display', serif;
+   text-align:center;
 }
 
 
@@ -184,4 +259,28 @@ font-family: 'Playfair Display', serif;
   }
 }
 
+:root {
+  --info-color: #da532aa1;
+}
+.btn-toggle-pass {
+  position: absolute;
+  background: transparent;
+  border:none;
+  right:0px;
+  top:10px;
+}
+.btn-toggle-pass.active {
+  color: var(--info-color);
+}
+#password {
+  position:absolute;
+  width:100%;
+} 
+#form{
+  width:100%;
+}
+.skup{
+  position:relative;
+  width:100%;
+}
 </style>

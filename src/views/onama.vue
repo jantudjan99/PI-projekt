@@ -32,7 +32,7 @@
 		 strane skupine studenata Fakulteta Informatike u Puli.
 		 Služi za kupnju/prodaju određenih proizvoda, recenzija usluga i proizvoda s kojima se susreću 
 		 tokom poslovanja te za dijeljenje savjeta za bolju učinkovitost i rad u kafiću. </p>
-	<h1 class="naslov2">Naš tim</h1>
+	<h1 class="naslov">Naš tim</h1>
 	<div class="tim">
 		<p class ="onama2"> Mi smo tim studenata koji pohađa preddiplomski studij 
 		Faukllteta Informatike u Puli, te je naš cilj bila izrada aplikacije koja
@@ -40,7 +40,7 @@
 		aspektima rada na ovoj stranici. 
         Ovdje u aplikaciji Cafetell naš tim usredotočen je na dvije stvari: vrstu posla
         koju radimo te projekte na kojima radimo. <br> <br>
-        Zašto smo baš mi dobar tim?<br>
+        <span class="zasto">Zašto smo baš mi dobar tim?</span><br>
         Zato jer su potrebne različite vještine za postizanje uspjeha te pozitivno 
         okruženje što se jako dobro odrazilo na naš tim i uspjeh. </p>
 
@@ -58,10 +58,10 @@
             <div class="mt-4 pt-2">
                 <div class="team position-relative d-block text-center">
                     <div class="image position-relative d-block overflow-hidden">
-                        <img src="assets/barb.jpg" class="img-fluid rounded barb" alt="">
+                        <img src="" class="img-fluid rounded barb" alt="">
                         <div class="overlay rounded bg-dark"></div>
                     </div>
-                    <div class="content py-2 member-position bg-white border-bottom overflow-hidden rounded d-inline-block">
+                    <div class="content py-2 member-position bg-boja border-bottom overflow-hidden rounded d-inline-block">
                         <h4 class="title mb-0">Barbara</h4>
                     </div>
                 </div>
@@ -74,10 +74,10 @@
             <div class="mt-4 pt-2">
                 <div class="team position-relative d-block text-center">
                     <div class="image position-relative d-block overflow-hidden">
-                        <img src="assets/lu.jpg" class="img-fluid rounded lu" alt="">
+                        <img src="" class="img-fluid rounded lu" alt="">
                         <div class="overlay rounded bg-dark"></div>
                     </div>
-                    <div class="content py-2 member-position bg-white border-bottom overflow-hidden rounded d-inline-block">
+                    <div class="content py-2 member-position bg-boja border-bottom overflow-hidden rounded d-inline-block">
                         <h4 class="title mb-0">Leonarda</h4>
                     </div>
 					
@@ -91,10 +91,10 @@
             <div class="mt-4 pt-2">
                 <div class="team position-relative d-block text-center">
                     <div class="image position-relative d-block overflow-hidden">
-                        <img src="assets/jan.jpg" class="img-fluid rounded jan" alt="">
+                        <img src="" class="img-fluid rounded jan" alt="">
                         <div class="overlay rounded bg-dark"></div>
                     </div>
-                    <div class="content py-2 member-position bg-white border-bottom overflow-hidden rounded d-inline-block">
+                    <div class="content py-2 member-position bg-boja border-bottom overflow-hidden rounded d-inline-block">
                         <h4 class="title mb-0">Jan</h4>
                     </div>
                 </div>
@@ -147,10 +147,9 @@
 	border: none;
   	box-shadow: 0 0 4px rgba(0,0,0,.1);
   	font-family: 'Playfair Display', serif;
-    position:relative;
-    margin-left: -12.5%;
-    margin-right: -12.5%;
-  
+    margin-left: -10%;
+  position: fixed;
+  width:100%;
 }
 .navbar .ikone {
 	border-radius: 50%;
@@ -326,7 +325,7 @@
 }
 
 .krem {
-    background-color:#f0ead6;
+    background-color:white;
     width: 80%;
     min-height: 100%;
     position: absolute;
@@ -341,10 +340,10 @@
 
 .naslov {
 font-size: 50px;
-margin-right: 68%;
+margin-left:2%;
 margin-top: 4%;
 font-family: 'Playfair Display', serif;
-color:rgba(0, 0, 0, 0.733);
+color:#c73500a6;
 
 }
 
@@ -357,15 +356,6 @@ margin-right: 2%;
 text-align: left;
 font-family:'Playfair Display', serif ;
 }
-
-.naslov2 {
-font-size: 50px;
-margin-right: 82%;
-margin-top: 3%;
-font-family: 'Playfair Display', serif;
-color:rgba(0, 0, 0, 0.733);	
-}
-
 
 .onama2 {
 font-size: 20px;
@@ -535,9 +525,14 @@ border:1px;
 .row{
 	position:relative;
 }
-.bg-white{
+.bg-boja{
 	position:absolute;
+  background-color:#c73500a6;
+  margin-top:10px;
 }
+/*a {
+    text-decoration: none !important;
+}*/
 
 .test{
 	position:relative;
@@ -545,6 +540,10 @@ border:1px;
 .sakrij{
 	overflow:hidden;
 	
+}
+.zasto{
+  color:rgba(0, 0, 0, 0.733);
+  /*font-size:28px;*/
 }
 </style>
 

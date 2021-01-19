@@ -1,3 +1,4 @@
+
 <template>
     <div class="pokusaj">
       <div class="proba">
@@ -31,7 +32,7 @@
           <input v-model="zupanija" type="text" class="form-control" id="gradField"><br>
         </div> <br> 
         <div class="form-group">
-         <button class="registracija" type="button" @click="registracija">Registriraj se</button> 
+        <a> <button class="registracija" type="button" @click="registracija">Registriraj se</button> </a>
          <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a>
       </div>
       </div> 
@@ -72,10 +73,14 @@ export default {
   border-color:black;
 }
 
-.form-control:focus {
-  border-color: #c73500a6;
-  box-shadow: 0 0 0 2px #c73500a6;
-  caret-color: black;
+.form-control:focus{
+    outline:none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color:#c73500a6;
+    caret-color:#c73500a6;
 }
 
 button:focus {
@@ -148,6 +153,7 @@ button:focus {
  height: 100%;
  font-family: 'Playfair Display', serif;
  font-size: 15px;
+ text-align:center;
 }
 
 .NR {
@@ -199,6 +205,9 @@ export default {
             this.$router.replace({ name: 'pocetna'})
 
             console.log('Nastavak'); 
+            /* if (email==''|| password=='' ) {
+             router.push({ name: 'registracija' });
+            }*/
         },
     },
 };

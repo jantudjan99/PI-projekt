@@ -5,7 +5,7 @@
 
     <div class="logo12">
 <img class="logo1" src="/assets/logo1.png">
-<img class="gif" src="/assets/kava.gif"> 
+<img class="gif" src="/assets/salica.gif"> 
     </div> 
 
     <div class="tipke">
@@ -22,13 +22,13 @@
 .prijava1 {
     padding: 8px 140px;
     font-size: 35px;
-    border:2px solid #e44b13b9;
+    border:2px solid #c73500c2;
     background-color:rgba(255, 255, 255, 0.459);
-    color:#c94313;
+    color:#c73500c2;
     border-radius:12px;
     font-family: 'Playfair Display', serif;
     margin:auto;
-    width: 4;
+    
 }
 
 .prijava1:hover {
@@ -40,14 +40,14 @@
 .registracija1 {
     padding: 6.5px 100px;
     font-size: 35px;
-    border:2px solid   #e44b13b9;
+    border:2px solid   #c73500c2;
     background-color:rgba(255, 255, 255, 0.459);
-    color:#c94313;
+    color:#c73500c2;
     border-radius: 12px;
     font-family: 'Playfair Display', serif;
     display: block;
     margin:auto;
-    width: 41%;
+    width: 393px;
     margin-top:30px;
 }
 
@@ -83,8 +83,10 @@
     width:50%;
     padding-bottom:80px;
     border-radius: 30px;
-
+    text-align:center;
 }
+    
+
 
 .mutna {
     background-size:cover;
@@ -95,13 +97,16 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     overflow: hidden;
-    margin-left: -45%;
-    max-width: 100%;
+    
+    min-width: 100%;
 }
 
 @media (max-width: 1199px) {
   .gif {
      display: none;
+  }
+  .okvir{
+     background-color:transparent;
   }
 }
 
