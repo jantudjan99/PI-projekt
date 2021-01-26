@@ -1,5 +1,5 @@
 <template>
-    <div>
+<div>
  <div class="navigacija">
 	
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
@@ -18,15 +18,39 @@
             <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
             <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
         </div>
-      </div> 
+      </div>
     </nav>
  </div>
  
 
-<div class="objavabtn">
- <input type="text" class="objava" placeholder="Dodaj objavu..." id="objava"  data-toggle="modal" data-target="#ModalLoginForm" >
- <button type="button" class="btn1 btn-primary btn-lg" data-toggle="modal" data-target="#ModalLoginForm" > Objavi</button>
+    <div class="objavabtn">
+    <input type="text" class="objava" placeholder="Dodaj objavu..." id="objava"  data-toggle="modal" data-target="#ModalLoginForm" >
+    <button type="button" class="btn1 btn-primary btn-lg" data-toggle="modal" data-target="#ModalLoginForm" > Objavi</button>
+    </div>
+
+ <!--<form @submit.prevent="postNewImage" class="form-inline mb-5">
+    <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+     <input
+         v-model="newImageUrl"
+        type="text"
+        class="form-control ml-2"
+        placeholder="Enter the image URL"
+        id="imageUrl"
+        />
 </div>
+<div class="form-group">
+<label for="imageDescription">Description</label>
+    <input
+    v-model="newImageDescription"
+        type="text"
+        class="form-control ml-2"
+        placeholder="Enter the image description"
+        id="imageDescription"
+        />
+</div>
+<button type="submit" class="btn btn-primary ml-2">Post image</button>
+</form> -->
 
 <div id="ModalLoginForm" class="modal fade">
     <div class="modal-dialog" role="document">
@@ -51,10 +75,10 @@
                     </div>
                     <input type="hidden" name="_token" value="">
                     <div class="form-group">
-                        <label class="control-label">Stanje</label>
+                                <label class="control-label">Stanje</label>
                         <div>
                             <select class="form-control input-lg" name="stanje" value="" id="stanje">
-                            <label for="stanje"></label>
+                                <label for="stanje"></label>
                                 <option value="-" id="-"> - </option>
                                 <label for="novo"></label>
                                 <option value="novo" id="novo"> novo </option>
@@ -77,10 +101,11 @@
                     </div>
                     
                         <div class="dodavanje-slike">
-                            <label for="file-input">
+                            <label for="dodajsliku">
                             <img src="assets/dodajsliku.png">
                         </label>
-                        <input id="file-input" type="file">
+                        <input type="file" id="dodajsliku" name="fileid" multiple>
+                        <croppa :width="400" :height="400" placeholder="Učitaj sliku" v-model="slikaReference"></croppa>
                         </div>
                     
                     <div class="form-group">
@@ -95,38 +120,39 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-    
- <!--<form @submit.prevent="postNewImage" class="form-inline mb-5">
-    <div class="form-group">
-        <label for="imageUrl">Image URL</label>
-     <input
-         v-model="newImageUrl"
-        type="text"
-        class="form-control ml-2"
-        placeholder="Enter the image URL"
-        id="imageUrl"
-        />
-</div>
-<div class="form-group">
-<label for="imageDescription">Description</label>
-    <input
-    v-model="newImageDescription"
-        type="text"
-        class="form-control ml-2"
-        placeholder="Enter the image description"
-        id="imageDescription"
-        />
-</div>
-<button type="submit" class="btn btn-primary ml-2">Post image</button>
-</form> -->
- 
+
+  <section id="blog">
+      <div class="container">  
+                
+        <div class="row">
+                
+                <div v-for="card in cards" :key="card.id" :info="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-12" cards-aos="fade-right">
+                    <div class="blog column text-center">
+                    <div class="card-header"> {{card.id}} </div>
+                    <div class="card-header"> {{card.time}} </div>
+                    <div class="card-header"> {{card.novaCijena}} </div>
+                    <div class="card-header"> {{card.Opis_slike}} </div>
+                    <div class="card-header"> {{card.stanje}} </div>
+                    <div class="card-header"> {{card.imeLokacije}} </div>
+                    <div class="card-body p-0"> 
+                    <img class="card-img-top" :src="card.url" /> 
+                    </div>                       
+                    </div>
+                </div>
+
+        </div>     
     </div>
+    </section>
+    
+
+</div>
 </template>
 
 <script>
 import store from '@/store'; 
 import { firebase } from '@/firebase';
-import { db } from '@/firebase';
+import { db, storage } from '@/firebase';
+
 
 function updateParent() {
     opener.document.parentForm.pf1.value = document.childForm.cf1.value;
@@ -138,6 +164,8 @@ function updateParent() {
     self.close();
     return false;
 }
+    
+
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
 	  console.log("****",user.email);
@@ -151,35 +179,99 @@ firebase.auth().onAuthStateChanged((user) => {
 	}
      }
   });
+
 export default {
+  props: ['info'],
   name:"kupiprodaj",
+  computed: {
+      postedFromNow() {
+         return this.postedFromNow2 + "Ok from computed";
+      },
+    },
+  
   data: function() {
     return {
+        cards: [],
         email: "",
         lozinka: "",
         novoImeLokacije: "",
         noviKontakt: "",
         novaCijena: "",
         noviOpisSlike: "",
-        
-   }
-  },
+        slikaReference: null,
+        postedFromNow2: "Ok from data",
+        url: "",
+        };
+    },
+
+
+    mounted() {
+        this.noveObjave();
+    },
+
     methods: {
-        objave(){
+        noveObjave() {
+            console.log("firebase dohvat");
+            db.collection("objave")
+            .get()
+            .then((query) => {
+                query.forEach((doc) => {
+                    const data = doc.data();
+                    console.log(data);
+                    /*this.cards.push(data);*/
+                    // <div class="card-header"> {{card.id}} </div>
+                    // <div class="card-header"> {{card.time}} </div>
+                    // <div class="card-header"> {{card.novaCijena}} </div>
+                    // <div class="card-header"> {{card.opisSlike}} </div>
+                    //  <div class="card-header"> {{card.stanje}} </div>
+                    this.cards.push({
+                        id: doc.id,
+                        time: data.posted_at, 
+                        url: data.Url,
+                        imeLokacije: data.Lokacija,
+                        kontakt: data.Kontakt,
+                        stanje: data.Stanje,
+                        novaCijena: data.Cijena,
+                        opisSlike: data.Opis_slike,
+                        //lijeva strana -> vue
+                        //desna strana -> firebase
+                    })
+
+                });
+            });
+        },
+
+// Firebase [{...,...,posted_at},{}]
+
+        objave() {
             const imeLokacije = this.novoImeLokacije;
             const kontakt = this.noviKontakt;
             const iznosCijene = this.novaCijena;
-            const opisSlike = this.noviOpisSlike;
+            const Opis_slike = this.noviOpisSlike;
             const stanje = this.stanje = document.getElementById("stanje").value;
-                
+            const url = this.url;
+
+            this.slikaReference.generateBlob(blobData => { 
+            console.log(blobData);
+            let nazivSlike = "objave/" + store.currentUser + "/" +  Date.now() + ".png";
+            
+            storage
+                .ref(nazivSlike)
+                .put(blobData)
+                .then(result => {
+
+                    result.ref.getDownloadURL().then((url) => {
+                    console.log("Javni link", url);
+
             db.collection('objave')
                 .add({
-                    
+
+                    Url: url,
                     Lokacija: imeLokacije,
                     Kontakt: kontakt,
                     Stanje: stanje,
                     Cijena: iznosCijene,
-                    Opis_slike: opisSlike,
+                    Opis_slike: Opis_slike,
                     posted_at: Date.now(),
                    
                 })
@@ -189,9 +281,24 @@ export default {
                     this.noviKontakt='';
                     this.novaCijena='';
                     this.noviOpisSlike='';
+                    this.slikaReference = null;
+                    this.url = " ";
+             
                 })
+
                 .catch((e)=> {
-                    console.error(e);
+                console.error(e);
+                });
+
+                })
+                .catch(e => {
+                console.error(e);
+            });
+
+            })
+            .catch(e => {
+               console.error(e)
+            });
                 });
         },
     },
@@ -389,8 +496,9 @@ export default {
     font-size:20px;
     font-family:'Playfair Display', serif ;
     padding-bottom:7.5px;
-    margin-top:70px;
-    border: 1px solid;
+    margin-top:100px;
+    border: 1px solid #6b6969f5;
+
 }
 
 .objava:focus{
@@ -463,5 +571,38 @@ margin-left:9%;
     cursor: pointer;
     width:25px;
     height:25px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,900,700,600,500,300,200,100,800);
+
+section{
+    padding:60px 0px;
+    font-family: 'Raleway', sans-serif;
+    color: #333;
+}
+
+.ion-minus{
+    padding:0px 10px;
+}
+
+#blog{
+	background-color:white;
+}
+
+#blog .blog.column a{
+	color:#5db4c0;
+	text-decoration:none;
+}
+
+#blog img:hover {
+	opacity:0.8; 
+}
+
+.col-lg-4 {
+    padding-top: 15px;
+}
+
+.row {
+    background-color:#6665652a;
 }
 </style>
