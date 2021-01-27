@@ -10,9 +10,9 @@
         <div class="navbar-nav">
           <a href="/pocetna" class="razmakni"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
           <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
-          <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
+          <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone activee">Recenzije</span></a>
           <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
-          <a href ="/onama" class="razmakni activee" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
+          <a href ="/onama" class="razmakni" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
           <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
 		      <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
       </div>
@@ -140,6 +140,15 @@ export default {
     },
 
     methods: {
+
+           odjava() {
+      firebase.auth().signOut().then(() =>{
+		this.$router.push({ name: 'prijava' })
+	  })
+    },
+ 
+
+
         noveRecenzije() {
             console.log("firebase dohvat");
             db.collection("recenzije")
@@ -213,12 +222,14 @@ export default {
                 });
         },
     },
-}
+};
+  
+
 </script>
 
 
 <style>
-    .navbar {
+.navbar {
 	color: #fff;
 	background: rgba(1, 1, 1, 0.699) !important;
 	opacity:100%;
@@ -229,6 +240,7 @@ export default {
   	font-family: 'Playfair Display', serif;
     position: fixed;
     width:100%;
+    z-index:99;
 }
 .navbar .ikone {
 	border-radius: 50%;
@@ -370,7 +382,9 @@ export default {
   }
   
 }
-
+.activee{
+	color: #c73500a6;
+}
 .razmakni{
   
   display:inline-flex;
@@ -475,5 +489,30 @@ margin-left:9%;
     cursor: pointer;
     width:25px;
     height:25px;
+}
+
+.card-body2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    text-align: center;
+}
+
+.card-body3 {
+    font-size:10px;
+    margin-left: 4%;
+}
+
+.card-img-top{
+    z-index:-1;
+}
+
+.col-lg-4 {
+    padding-top: 15px;
+    
+}
+
+.row {
+    background-color:#fcf7f3fd;
+    margin-top: 3%;
 }
 </style>
