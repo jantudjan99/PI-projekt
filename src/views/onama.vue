@@ -16,7 +16,7 @@
           <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
           <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
           <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
-          <a href ="/onama" class="razmakni activee" v-class=" { active:isActive }" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
+          <a href ="/onama" class="razmakni" v-class=" { active:isActive }" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone activee">O nama</span></a>
           <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
 		      <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
       </div>
@@ -138,18 +138,19 @@
 </script>
 
 <style>
-  .navbar {
-	color: #fff;
-	background: rgba(1, 1, 1, 0.699) !important;
-	opacity:100%;
-	padding: 5px 16px;
-	border-radius: 0;
-	border: none;
-  	box-shadow: 0 0 4px rgba(0,0,0,.1);
-  	font-family: 'Playfair Display', serif;
+.navbar {
+    color: #fff;
+    background: rgba(1, 1, 1, 0.699) !important;
+    opacity:100%;
+    padding: 5px 16px;
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 0 4px rgba(0,0,0,.1);
+    font-family: 'Playfair Display', serif;
     margin-left: -10%;
-  position: fixed;
-  width:100%;
+    position: fixed;
+    width:100%;
+    z-index:99;
 }
 .navbar .ikone {
 	border-radius: 50%;
@@ -162,8 +163,6 @@
 	padding-left: 0px;
 	padding-right: 50px;
 	font-size: 24px;
-	
-		
 }
 .navbar-nav{
 	padding-left:25px;
@@ -332,10 +331,8 @@
     margin-left:10%;
 }
 
-.activee:active{
+.activee{
 	color: #A43323;
-
-
 }
 
 .naslov {
