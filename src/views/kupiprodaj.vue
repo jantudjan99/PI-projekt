@@ -1,7 +1,6 @@
 <template>
 <div>
  <div class="navigacija">
-	
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
         <img src="assets/logo.png" class="logo">  		
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -10,8 +9,8 @@
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">		
         <div class="navbar-nav">
-            <a href="/pocetna" class="razmakni activee"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
-            <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
+            <a href="/pocetna" class="razmakni"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
+            <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone activee">Kupi/Prodaj</span></a>
             <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
             <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
             <a href="/onama" class="razmakni"><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
@@ -101,9 +100,6 @@
                     </div>
                     
                         <div class="dodavanje-slike">
-                            <label for="dodajsliku">
-                            <img src="assets/dodajsliku.png">
-                        </label>
                         <input type="file" id="dodajsliku" name="fileid" multiple>
                         <croppa :width="400" :height="400" placeholder="Učitaj sliku" v-model="slikaReference"></croppa>
                         </div>
@@ -127,23 +123,19 @@
         <div class="row">
                 
                 <div v-for="card in cards" :key="card.id" :info="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-12" cards-aos="fade-right">
-                    <div class="blog column text-center">
-                    <div class="card-header"> {{card.id}} </div>
-                    <div class="card-header"> {{card.time}} </div>
-                    <div class="card-header"> {{card.novaCijena}} </div>
-                    <div class="card-header"> {{card.Opis_slike}} </div>
-                    <div class="card-header"> {{card.stanje}} </div>
-                    <div class="card-header"> {{card.imeLokacije}} </div>
-                    <div class="card-body p-0"> 
+                   <div class="card-header"> 
                     <img class="card-img-top" :src="card.url" /> 
-                    </div>                       
-                    </div>
+                    </div> 
+                     <div class="card-body3">  {{card.time}}  </div> 
+                     <div class="card-body2"> {{card.opisSlike}} </div>
+                     <div class="card-body1">Cijena: {{card.novaCijena}} </div>
+                     <div class="card-body1">Stanje: {{card.stanje}} </div>
+                     <div class="card-body1"> Lokacija: {{card.imeLokacije}} </div>
+                
                 </div>
-
         </div>     
     </div>
     </section>
-    
 
 </div>
 </template>
@@ -152,6 +144,7 @@
 import store from '@/store'; 
 import { firebase } from '@/firebase';
 import { db, storage } from '@/firebase';
+import moment from 'moment';
 
 
 function updateParent() {
@@ -181,13 +174,15 @@ firebase.auth().onAuthStateChanged((user) => {
   });
 
 export default {
-  props: ['info'],
+  props: ["info"],
   name:"kupiprodaj",
-  computed: {
-      postedFromNow() {
-         return this.postedFromNow2 + "Ok from computed";
-      },
-    },
+    computed: {
+       postedFromNow () {
+            return moment(this.data.time).fromNow();
+       },
+  },
+
+ 
   
   data: function() {
     return {
@@ -199,7 +194,7 @@ export default {
         novaCijena: "",
         noviOpisSlike: "",
         slikaReference: null,
-        postedFromNow2: "Ok from data",
+        postedFromNow: "",
         url: "",
         };
     },
@@ -210,6 +205,11 @@ export default {
     },
 
     methods: {
+              odjava() {
+      firebase.auth().signOut().then(() =>{
+		this.$router.push({ name: 'prijava' })
+	  })
+    },
         noveObjave() {
             console.log("firebase dohvat");
             db.collection("objave")
@@ -218,12 +218,7 @@ export default {
                 query.forEach((doc) => {
                     const data = doc.data();
                     console.log(data);
-                    /*this.cards.push(data);*/
-                    // <div class="card-header"> {{card.id}} </div>
-                    // <div class="card-header"> {{card.time}} </div>
-                    // <div class="card-header"> {{card.novaCijena}} </div>
-                    // <div class="card-header"> {{card.opisSlike}} </div>
-                    //  <div class="card-header"> {{card.stanje}} </div>
+                   
                     this.cards.push({
                         id: doc.id,
                         time: data.posted_at, 
@@ -235,6 +230,7 @@ export default {
                         opisSlike: data.Opis_slike,
                         //lijeva strana -> vue
                         //desna strana -> firebase
+      
                     })
 
                 });
@@ -254,7 +250,6 @@ export default {
             this.slikaReference.generateBlob(blobData => { 
             console.log(blobData);
             let nazivSlike = "objave/" + store.currentUser + "/" +  Date.now() + ".png";
-            
             storage
                 .ref(nazivSlike)
                 .put(blobData)
@@ -320,6 +315,7 @@ export default {
     position: fixed;
     width:100%;
     margin-bottom:50px;
+    z-index:99;
 }
 .navbar .ikone {
 	border-radius: 50%;
@@ -337,6 +333,7 @@ export default {
 }
 .navbar-nav{
 	padding-left:25px;
+    
 }
 .navbar .navbar-brand:hover, .navbar .navbar-brand:focus {
   color: #fff;
@@ -416,6 +413,7 @@ export default {
 /*.navbar .navbar-toggle:focus, .navbar .navbar-toggle:hover {
 	
 }*/
+
 .navbar .navbar-nav .open .dropdown-menu {
 	background: #faf7fd;
 	border-radius: 1px;
@@ -505,6 +503,12 @@ export default {
     border: none;
 }
 
+.btn-primary:focus{
+    
+}
+.header{
+    width:10% !important;
+}
 
 .modal-header {
 font-family:'Playfair Display', serif ;
@@ -600,9 +604,37 @@ section{
 
 .col-lg-4 {
     padding-top: 15px;
+   
 }
 
 .row {
-    background-color:#6665652a;
+    background-color:#fcf7f3fd;
 }
+
+
+.dodavanje-slike {
+    margin-left: 7%;
+}
+
+.card-body1 {
+    font-family: 'Playfair Display', serif;
+    margin-left:5%;
+}
+
+.card-body2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.card-body3 {
+    font-size:10px;
+    margin-left: 4%;
+}
+
+.card-img-top{
+    z-index:-1;
+    
+}
+
 </style>
