@@ -44,13 +44,25 @@
                         <input type="file" id="dodajsliku" name="fileid" multiple>
                         <croppa :width="400" :height="400" placeholder="Učitaj sliku" v-model="slikaReference"></croppa>
                         </div>
-                    <div class="form-group">
+
+                        <div class="container d-flex justify-content-center mt-5">
+                            <div class="card text-center mb-5">
+                                <div class="circle-image"> </div>  <span class="fw-500">Kakva je vaša recenzija?</span>
+                                <div class="row mb-5 mt-5"> 
+                                    
+                                    <div class="col-md-6"> <span class="thumb thumbs-up"><i class="fa fa-thumbs-o-up" id="pozitivna"></i></span> <small class="fw-500" id="pozitivna-tekst" >Pozitivna </small>  </div>
+                                 
+                                     <div class="col-md-6" > <span class="thumb thumbs-down"><i class="fa fa-thumbs-o-down"  id="negativna"></i></span> <small class="fw-500"  id="negativna-tekst">Negativna</small> </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div>
                             <button type="submit" class="btn">
                                 Objavi
                             </button>
                         </div>
-                    </div>
+                    
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -163,6 +175,8 @@ export default {
                         time: data.posted_at, 
                         url: data.Url,
                         opisSlike: data.Opis_slike,
+                        pozitivna:data.pozitivna,
+                        negativna:data.negativna,
                         //lijeva strana -> vue
                         //desna strana -> firebase
       
@@ -177,7 +191,8 @@ export default {
         recenzije() {
             const Opis_slike = this.noviOpisSlike;
             const url = this.url;
-
+           /* const pozitivna = document.getElementById("pozitivna").value = document.getElementById("pozitivna-tekst").value;
+            const negativna = document.getElementById("negativna").value = document.getElementById("negativna-tekst").value; */
             this.slikaReference.generateBlob(blobData => { 
             console.log(blobData);
             let nazivSlike = "recenzije/" + store.currentUser + "/" +  Date.now() + ".png";
@@ -195,12 +210,16 @@ export default {
 
                     Url: url,
                     Opis_slike: Opis_slike,
+                   /* pozitivna:pozitivna,
+                    negativna:negativna, */
                     posted_at: Date.now(),
                    
                 })
                 .then((doc) => {
                     console.log('Spremljeno', doc);
                     this.noviOpisSlike='';
+                /*    this.pozitivna='';
+                    this.negativna=''; */
                     this.slikaReference = null;
                     this.url = " ";
              
@@ -489,12 +508,16 @@ margin-left:9%;
     cursor: pointer;
     width:25px;
     height:25px;
+    
+}
+
+.dodavanje-slike {
+    margin-left: 7%;
 }
 
 .card-body2 {
     font-family: 'Playfair Display', serif;
     font-size: 15px;
-    text-align: center;
 }
 
 .card-body3 {
@@ -515,4 +538,71 @@ margin-left:9%;
     background-color:#fcf7f3fd;
     margin-top: 3%;
 }
+
+body {
+    background-color: #f7f6f6
+}
+
+.card {
+    width: 350px;
+    border: none;
+    border:none;
+    border-radius: 12px;
+}
+
+.circle-image img {
+    border: 6px solid #fff;
+    border-radius: 100%;
+    padding: 9px;
+    top: -28px;
+    position: relative;
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    z-index: 1;
+    background: #e7d184;
+    cursor: pointer
+}
+
+.help-text {
+    margin-top: -21px
+}
+
+.thumb {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    font-size: 19px;
+    border: 1px solid #bbb;
+    line-height: 37px;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.5s
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+    color:rgba(15, 15, 15, 0.877);
+    font-size:17px;
+  
+}
+
+.thumbs-up:hover {
+    color: #fff;
+    background-color: green;
+    border: 1px solid green
+}
+
+.thumbs-down:hover {
+    color: #fff;
+    background-color: red;
+    border: 1px solid red
+}
+
+.modal-title{
+    font-size:38px;
+    margin-left:5%;
+    color:rgba(15, 15, 15, 0.767);
+}
+
 </style>
