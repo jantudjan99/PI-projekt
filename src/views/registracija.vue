@@ -55,10 +55,14 @@ export default {
     signin () {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch(function(error) {
         console.log(error);
+      
+      this.$router.replace({ name: 'pocetna'})
       });
     }
   }
-}
+
+
+};
 </script> 
 
 <style>
