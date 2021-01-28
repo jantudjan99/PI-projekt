@@ -36,11 +36,17 @@
                 <form @submit.prevent="savjeti()" role="form" method="noviSavjeti()" action="">
                     <input type="hidden" name="_token" value="">
                     <div class="form-group">
-                        <label for="savjeti" class="control-label">Dodaj savjet</label>
+                        <label for="savjeti" class="control-label-naslov">Naslov</label>
                         <div>
-                            <input v-model="noviOpisSlike" type="text" class="form-control input-lg" name="noviOpisSlike" id="opisSlike" value="">
+                            <input v-model="noviNaslovSlike" type="text" class="form-control input-lg" name="noviNaslovslike" id="NaslovSlike" value="">
                         </div>
-                    </div>
+                    </div> <br>
+					<div class="form-group">
+                        <label for="savjeti" class="control-label">Savjet ili trik:</label>
+                        <div>
+                            <input v-model=" noviOpisSlike" type="text" class="form-control input-lg"  name="noviOpisSlike" id="opisSlike" value="">
+                        </div>
+					</div>
                     
                        <div class="dodavanje-slike">
                         <input type="file" id="dodajsliku" name="fileid" multiple>
@@ -69,8 +75,12 @@
                    <div class=" col-lg-12"> 
                     <img class="card-img-top" :src="card.url" />
 					  </div>
-                     <div class="opis col-lg-12"> {{card.opisSlike}} </div>
+					  <div class="naslov col-lg-12">{{card.NaslovSlike}} </div>
+					  
+                     <div class="opis col-lg-12">{{card.opisSlike}}  </div>
                    				</div>
+					
+
 				
         </div>     
     </div>
@@ -128,7 +138,8 @@ export default {
         cards: [],
         email: "",
         lozinka: "",
-        noviOpisSlike: "",
+		noviOpisSlike: "",
+		noviNaslovSlike:"",
         slikaReference: null,
         proba: "",
         url: "",
@@ -163,7 +174,8 @@ export default {
                         id: doc.id,
                         time: data.posted_at, 
                         url: data.Url,
-                        opisSlike: data.Opis_slike,
+						opisSlike: data.Opis_slike,
+						NaslovSlike:data.NaslovSlike,
                         //lijeva strana -> vue
                         //desna strana -> firebase
       
@@ -177,7 +189,8 @@ export default {
 
         savjeti() {
             const Opis_slike = this.noviOpisSlike;
-            const url = this.url;
+			const url = this.url;
+			const NaslovSlike = this.noviNaslovSlike;
 
             this.slikaReference.generateBlob(blobData => { 
             console.log(blobData);
@@ -195,13 +208,15 @@ export default {
                 .add({
 
                     Url: url,
-                    Opis_slike: Opis_slike,
+					Opis_slike: Opis_slike,
+					NaslovSlike: NaslovSlike,
                     posted_at: Date.now(),
                    
                 })
                 .then((doc) => {
                     console.log('Spremljeno', doc);
-                    this.noviOpisSlike='';
+					this.noviOpisSlike='';
+					this.noviNaslovSlike='';
                     this.slikaReference = null;
                     this.url = " ";
              
@@ -528,5 +543,22 @@ margin-left:9%;
 		
 }
 
+
+.dodavanje-slike {
+    margin-left: 7%;
+}
+
+.naslov {
+	font-size:26px;
+	color:rgba(20, 20, 20, 0.877);
+	font-family: 'Playfair Display', serif;
+}
+
+.opis {
+	font-size:19px;
+	color:rgba(20, 20, 20, 0.877);
+	font-family: 'Playfair Display', serif;
+
+}
 
 </style>
