@@ -10,7 +10,6 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">		
-        
         <div class="navbar-nav">
           <a href="/pocetna" class="razmakni"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
           <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
@@ -336,12 +335,11 @@
 }
 
 .naslov {
-font-size: 50px;
+font-size: 40px;
 margin-left:2%;
-margin-top: 4%;
+margin-top: 8%;
 font-family: 'Playfair Display', serif;
 color:#c73500a6;
-
 }
 
 .onama1 {
