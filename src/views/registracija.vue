@@ -10,33 +10,37 @@
      <form @submit.prevent="signin">
        <div class="kontejner">
        <div class="form-group">
-          <label class="forma" for="e-mail">E-mail</label> <br><br>
-          <input v-model="email" type="email" class="form-control" id="emailfield" aria-describedby=""  ><br> 
+          <label class="forma" for="email">E-mail</label> <br><br>
+          <input v-model="noviEmail" type="email" class="form-control" id="email" aria-describedby=""  ><br> 
         </div>
         <br> 
        <div class="form-group">
           <label class="forma" for="passwordField">Lozinka</label> <br><br>
-          <input v-model="lozinka" type="password" class="form-control" id="passwordField" ><br>
+          <input v-model="novaLozinka" type="password" class="form-control" id="lozinka" ><br>
        </div> <br>
        
        <div class="form-group">
-          <label class="forma" for="korisnicko_ime">Korisničko ime</label> <br><br>
-          <input v-model="korisnicko_ime" type="korisnicko_ime" class="form-control" id="userfield" aria-describedby="s"  ><br>
+          <label class="forma" for="korisnickoIme">Korisničko ime</label> <br><br>
+          <input v-model="novoKorisnicko_ime" type="korisnicko_ime" class="form-control" id="korisnickoIme" aria-describedby="s"  ><br>
         </div> <br>
        <div class="form-group">
           <label class="forma" for="ime_objekta">Ime objekta</label> <br><br>
-          <input v-model="ime_objekta" type="ime_objekta" class="form-control" id="objectfields" aria-describedby=""  ><br> 
+          <input v-model="novoIme_objekta" type="ime_objekta" class="form-control" id="ime_objekta" aria-describedby=""  ><br> 
         </div> <br>
         <div class="form-group">
-          <label class="forma" for="gradField">Županija</label> <br><br>
-          <input v-model="zupanija" type="text" class="form-control" id="gradField"><br>
+          <label class="forma" for="imeLokacija">Lokacija</label> <br><br>
+          <input v-model="novoImeLokacije" type="text" class="form-control" id="imeLokacije" aria-describedby=""><br>
         </div> <br> 
+          <div class="form-group">
+          <label for="kontakt" class="forma">Kontakt</label> <br> <br>
+        <input v-model="noviKontakt" type="text" class="form-control" id="kontakt" name="contact" aria-describedby=""><br>
+        </div> <br>
         <div class="form-group">
         <a> <button class="registracija" type="button" @click="registracija">Registriraj se</button> </a>
          <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a>
       </div>
-      </div> 
       <div class="proba2">
+        </div>
         </div>
       </form>
       </div>
@@ -44,26 +48,66 @@
 </template>
 
 <script>
+import {firebase} from '@/firebase';
+import { db } from '@/firebase';
+import store from '@/store';
+
 export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      lokacija: '',
+      kontakt: '',
+      korisnicko_ime: '',
+      ime_objekta: '',
     }
   },
+
   methods: {
     signin () {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch(function(error) {
-        console.log(error);
-      
-      this.$router.replace({ name: 'pocetna'})
+      console.log(error);
+  
       });
+
+        db.collection("user").add({
+          ime: this.data.korisnicko_ime,
+          email: this.data.email,
+          lozinka: this.data.lozinka,
+          lokacija: this.lokacija,
+          ime_objekta: this.ime_objekta,
+        })
+        .then((doc) => {
+              console.log("Spremljeno", doc)
+          })
+        .catch(function(error){
+        console.error('Došlo je do greške',error);
+      });
+      store.ispisikorisnicko_ime = this.korisnicko_ime;
+      store.trenutniKorisnik = this.email;
+      store.lozinka = this.lozinka;
+      store.lokacija = this.lokacija;
+      store.ime_objekta = this.ime_objekta;
+
+        firebase .auth()
+                  .createUserWithEmailAndPassword(this.data.email,this.data.lozinka)
+                  .then(function()   {
+                          that.$router.replace({name: "pocetna" });  
+                    })
+
+                  .catch(function(error){
+                    console.error('Došlo je do greške',error);
+                  });
+
     }
   }
 
 
 };
 </script> 
+
+
 
 <style>
 
