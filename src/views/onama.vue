@@ -29,8 +29,9 @@
 	<h1 class="naslov">Što je CafeTell?</h1>
 	<p class="onama1">Cafetell, aplikacija namijenjena za vlasnike kafića koja je osnovana 2020. godine od 
 		 strane skupine studenata Fakulteta Informatike u Puli.
-		 Služi za kupnju/prodaju određenih proizvoda, recenzija usluga i proizvoda s kojima se susreću 
-		 tokom poslovanja te za dijeljenje savjeta za bolju učinkovitost i rad u kafiću. </p>
+		 U Cafetell-u, naši korisnici, mogu kupovati ili nabavljati rabljene predmete iz kafića, davati savjete ili dijeliti trikove
+    koje su stekli kroz svoje godine poslovanja. Nakraju, omogućujemo i recenziranje različitih proizvoda i usluga s kojima se vlasnici susreću,
+    te na taj način mogu upozoriti ostale na loše usluge i proizvode ili, suprotno, pohvaliti te predložiti korisne informacije o istima.  </p>
 	<h1 class="naslov">Naš tim</h1>
 	<div class="tim">
 		<p class ="onama2"> Mi smo tim studenata koji pohađa preddiplomski studij 
@@ -57,7 +58,7 @@
             <div class="mt-4 pt-2">
                 <div class="team position-relative d-block text-center">
                     <div class="image position-relative d-block overflow-hidden">
-                        <img src="" class="img-fluid rounded barb" alt="">
+                        <img src="/assets/barb.jpg" class="img-fluid rounded barb" alt="">
                         <div class="overlay rounded bg-dark"></div>
                     </div>
                     <div class="content py-2 member-position bg-boja border-bottom overflow-hidden rounded d-inline-block">
@@ -73,7 +74,7 @@
             <div class="mt-4 pt-2">
                 <div class="team position-relative d-block text-center">
                     <div class="image position-relative d-block overflow-hidden">
-                        <img src="" class="img-fluid rounded lu" alt="">
+                        <img src="/assets/lu.jpg" class="img-fluid rounded lu" alt="">
                         <div class="overlay rounded bg-dark"></div>
                     </div>
                     <div class="content py-2 member-position bg-boja border-bottom overflow-hidden rounded d-inline-block">
