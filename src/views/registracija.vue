@@ -1,4 +1,3 @@
-
 <template>
     <div class="pokusaj">
       <div class="proba">
@@ -7,42 +6,41 @@
     </div>
     <div class="tekst2">
     <h1 class="text-center mb-5" >Registracija</h1>
-     <form @submit.prevent="signin">
+     <form>
        <div class="kontejner">
        <div class="form-group">
-          <label class="forma" for="email">E-mail</label> <br><br>
-          <input v-model="noviEmail" type="email" class="form-control" id="email" aria-describedby=""  ><br> 
+          <label class="forma" for="e-mail">E-mail</label> <br><br>
+          <input v-model="email" type="email" class="form-control" id="emailfield" aria-describedby=""  ><br> 
         </div>
         <br> 
        <div class="form-group">
           <label class="forma" for="passwordField">Lozinka</label> <br><br>
-          <input v-model="novaLozinka" type="password" class="form-control" id="lozinka" ><br>
+          <input v-model="lozinka" type="password" class="form-control" id="passwordField" ><br>
        </div> <br>
        
        <div class="form-group">
-          <label class="forma" for="korisnickoIme">Korisničko ime</label> <br><br>
-          <input v-model="novoKorisnicko_ime" type="korisnicko_ime" class="form-control" id="korisnickoIme" aria-describedby="s"  ><br>
+          <label class="forma" for="korisnicko_ime">Korisničko ime</label> <br><br>
+          <input v-model="korisnicko_ime" type="korisnicko_ime" class="form-control" id="userfield" aria-describedby="s"  ><br>
         </div> <br>
        <div class="form-group">
           <label class="forma" for="ime_objekta">Ime objekta</label> <br><br>
-          <input v-model="novoIme_objekta" type="ime_objekta" class="form-control" id="ime_objekta" aria-describedby=""  ><br> 
+          <input v-model="ime_objekta" type="ime_objekta" class="form-control" id="objectfields" aria-describedby=""  ><br> 
         </div> <br>
         <div class="form-group">
-          <label class="forma" for="imeLokacija">Lokacija</label> <br><br>
-          <input v-model="novoImeLokacije" type="text" class="form-control" id="imeLokacije" aria-describedby=""><br>
+          <label class="forma" for="lokacija">Lokacija</label> <br><br>
+          <input v-model="lokacija" type="text" class="form-control" id="lokacija" aria-describedby=""><br>
         </div> <br> 
-          <div class="form-group">
-          <label for="kontakt" class="forma">Kontakt</label> <br> <br>
-        <input v-model="noviKontakt" type="text" class="form-control" id="kontakt" name="contact" aria-describedby=""><br>
-        </div> <br>
         <div class="form-group">
-        <a> <button class="registracija" type="button" @click="registracija">Registriraj se</button> </a>
-         <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a>
+          <label class="forma" for="kontakt">Kontakt</label> <br><br>
+          <input v-model="kontakt" type="text" class="form-control" id="kontakt" aria-describedby=""><br>
+        </div> <br> 
+        <div class="form-group">
+        <a> <button class="registracija" @click="registracija();registracijaForma()" type="button">Registriraj se</button> </a>
+        
       </div>
-      <div class="proba2">
-        </div>
-        </div>
+      </div> 
       </form>
+       <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a>
       </div>
       </div>
 </template>
@@ -53,30 +51,49 @@ import { db } from '@/firebase';
 import store from '@/store';
 
 export default {
-  data () {
+  data: function () {
     return {
+      store,
+      korisnicko_ime:'',
       email: '',
-      password: '',
+      lozinka: '',
+      ime_objekta: '',
       lokacija: '',
       kontakt: '',
-      korisnicko_ime: '',
-      ime_objekta: '',
     }
   },
 
   methods: {
-    signin () {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch(function(error) {
-      console.log(error);
-  
-      });
-
+    registracija() {
+        
+          firebase 
+            .auth()
+            .createUserWithEmailAndPassword(this.email, this.lozinka)
+            .then(
+            function() {
+             console.log('Uspješna registracija'); 
+             
+             
+            })
+            .catch(function(error) {
+              console.error("Došlo je do greške", error) 
+               
+            });
+            
+            console.log('Nastavak'); 
+            this.$router.replace({ name: 'pocetna'});
+            
+        },
+    registracijaForma () {
+      
+      
         db.collection("user").add({
-          ime: this.data.korisnicko_ime,
-          email: this.data.email,
-          lozinka: this.data.lozinka,
+          korisnicko_ime: this.korisnicko_ime,
+          email: this.email,
+          lozinka: this.lozinka,
           lokacija: this.lokacija,
           ime_objekta: this.ime_objekta,
+          kontakt: this.kontakt,
         })
         .then((doc) => {
               console.log("Spremljeno", doc)
@@ -84,27 +101,12 @@ export default {
         .catch(function(error){
         console.error('Došlo je do greške',error);
       });
-      store.ispisikorisnicko_ime = this.korisnicko_ime;
-      store.trenutniKorisnik = this.email;
-      store.lozinka = this.lozinka;
-      store.lokacija = this.lokacija;
-      store.ime_objekta = this.ime_objekta;
-
-        firebase .auth()
-                  .createUserWithEmailAndPassword(this.data.email,this.data.lozinka)
-                  .then(function()   {
-                          that.$router.replace({name: "pocetna" });  
-                    })
-
-                  .catch(function(error){
-                    console.error('Došlo je do greške',error);
-                  });
-
-    }
-  }
-
-
+        },
+    },
 };
+        
+
+    
 </script> 
 
 
@@ -220,43 +222,12 @@ button:focus {
   }
 }
 
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
 
 </style>
 
-<script>
-import { firebase } from '@/firebase';
-
-export default {
-  name: 'Registracija',
-  data() {
-    return {
-      korisnicko_ime: '',
-      lozinka: '',
-      email: '',
-      zupanija: '',
-      ime_objekta: '',
-    };
-  },
-
-  methods: {
-        registracija() {
-
-          firebase .auth().createUserWithEmailAndPassword(this.email, this.lozinka).then(
-            function() {
-             console.log('Uspješna registracija'); 
-            } )
-            .catch(function(error) {
-              console.error("Došlo je do greške", error)  
-            });
-
-            this.$router.replace({ name: 'pocetna'})
-
-            console.log('Nastavak'); 
-            /* if (email==''|| password=='' ) {
-             router.push({ name: 'registracija' });
-            }*/
-        },
-    },
-};
-</script>
