@@ -48,11 +48,15 @@
                         <div class="container d-flex justify-content-center mt-5">
                             <div class="card text-center mb-5">
                                 <div class="circle-image"> </div>  <span class="fw-500">Kakva je vaša recenzija?</span>
-                                <div class="row mb-5 mt-5"> 
-                                    
+                                <div class="row mb-5 mt-5">
+                                    <!-- novo -->
+                                    <form @click.prevent="recenzijaPozitivno()">
                                     <div class="col-md-6"> <span class="thumb thumbs-up"><i class="fa fa-thumbs-o-up" id="pozitivna"></i></span> <small class="fw-500" id="pozitivna-tekst" >Pozitivna </small>  </div>
-                                 
-                                     <div class="col-md-6" > <span class="thumb thumbs-down"><i class="fa fa-thumbs-o-down"  id="negativna"></i></span> <small class="fw-500"  id="negativna-tekst">Negativna</small> </div>
+                                    </form>
+                                    <!-- novo -->
+                                    <form @click.prevent="recenzijaNegativno()">
+                                        <div class="col-md-6" > <span class="thumb thumbs-down"><i class="fa fa-thumbs-o-down"  id="negativna"></i></span> <small class="fw-500"  id="negativna-tekst">Negativna</small> </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -73,14 +77,25 @@
   <section id="blog">
       <div class="container">  
                 
-        <div class="row">
+        <div class="red">
                 
                 <div v-for="card in cards" :key="card.id" :info="card" class="col-lg-4 col-md-4 col-sm-4 col-xs-12" cards-aos="fade-right">
                    <div class="card-header"> 
                     <img class="card-img-top" :src="card.url" /> 
-                    </div> 
-                     <div class="card-body3">  {{card.time}}  </div> 
-                     <div class="card-body2"> {{card.opisSlike}} </div>
+                    
+                     <div class="card-body2"> {{card.posted_By}} </div> <!--novo-->
+                     <div class="card-body3">  {{card.time}} time ago </div> 
+                     <div class="card-body2"> {{card.opisSlike}} </div> 
+                     <div v-if="card.rate==1"> <span class="thumb thumbs-up"><i class="fa fa-thumbs-o-up" id="pozitivna"></i></span> </div> <!--novo -->
+                     <div v-if="card.rate==-1"><span class="thumb thumbs-down"><i class="fa fa-thumbs-o-down"  id="negativna"></i></span> </div> <!--novo -->
+                     <form @submit.prevent="postComment()" class="form-inline mb-5">
+                        <div class="form-group">
+                            <input v-model="newComment" type="text" class="form-control komentar" id="imageUrl" placeholder="Komentiraj...">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Komentiraj</button>
+                    </form>
+                     </div>
+                     
                 
                 </div>
         </div>     
@@ -123,6 +138,8 @@ firebase.auth().onAuthStateChanged((user) => {
      }
   });
 
+
+
 export default {
   props: ["info"],
   name:"recenzije",
@@ -135,6 +152,8 @@ export default {
  
   
   data: function() {
+    
+      
     return {
         cards: [],
         email: "",
@@ -143,6 +162,8 @@ export default {
         slikaReference: null,
         proba: "",
         url: "",
+        rating: null, //novo
+        
         };
     },
 
@@ -159,7 +180,22 @@ export default {
 	  })
     },
  
-
+      postComment() {
+          console.log("radi");
+      if (this.newComment) {
+        db.collection("posts")
+          .doc(this.info.id)
+            .collection("comments")
+            .add({ email: this.global.userEmail, comment: this.newComment, posted_at: Date.now() })
+              .then(result => {
+                
+                this.newComment = "";
+              })
+              .catch(e => {
+                console.error(e)
+              })
+      }
+    },  
 
         noveRecenzije() {
             console.log("firebase dohvat");
@@ -177,6 +213,8 @@ export default {
                         opisSlike: data.Opis_slike,
                         pozitivna:data.pozitivna,
                         negativna:data.negativna,
+                        rate:data.rating, //novo
+                        posted_By:data.postedBy //novo
                         //lijeva strana -> vue
                         //desna strana -> firebase
       
@@ -184,6 +222,20 @@ export default {
 
                 });
             });
+        },
+        
+        //novo
+        recenzijaPozitivno(){
+            this.rating=1;
+            console.log("recenzija ocjenjena pozitino" + this.rating);
+            return true;
+        },
+        
+        //novo
+        recenzijaNegativno(){
+            this.rating=-1;
+            console.log("recenzija ocjenjena negativno" + this.rating);
+            return true;
         },
 
 // Firebase [{...,...,posted_at},{}]
@@ -208,11 +260,14 @@ export default {
             db.collection('recenzije')
                 .add({
 
+                    rating:this.rating, //novo
+                    postedBy:store.currentUser, //novo
                     Url: url,
                     Opis_slike: Opis_slike,
                    /* pozitivna:pozitivna,
                     negativna:negativna, */
                     posted_at: Date.now(),
+                    
                    
                 })
                 .then((doc) => {
@@ -434,7 +489,7 @@ export default {
     font-size:20px;
     font-family:'Playfair Display', serif ;
     padding-bottom:7.5px;
-    margin-top:70px;
+    margin-top:100px;
     border: 1px solid;
 }
 
@@ -451,7 +506,7 @@ margin-left:9%;
 
 .control-label {
     float: left;
-    margin-left: 1%;
+    margin-left: 0.2%;
     font-family:'Playfair Display', serif ;
 }
 
@@ -534,13 +589,13 @@ margin-left:9%;
     
 }
 
-.row {
-    background-color:#fcf7f3fd;
+.red {
+    background-color:#ffffff36;
     margin-top: 3%;
 }
 
 body {
-    background-color: #f7f6f6
+    background-color: white;
 }
 
 .card {
@@ -604,5 +659,14 @@ body {
     margin-left:5%;
     color:rgba(15, 15, 15, 0.767);
 }
-
+.btn-primary{
+    margin-left:10px;
+    margin-top:-10px;
+}
+.komentar{
+    margin-top:8px;
+}
+.card-header{
+    height:550px;
+}
 </style>
