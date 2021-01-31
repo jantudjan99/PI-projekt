@@ -34,13 +34,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <p class="profile-rating">RANKINGS : <span>8/10</span></p>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            </ul>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-8"> 
@@ -52,7 +45,7 @@
                                                 <label>Korisničko ime:</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Laura12</p>
+                                                <p></p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -65,7 +58,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Email</label>
+                                                <label>Email:</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p>finovino@gmail.com</p>
@@ -98,6 +91,58 @@
         </div>
 </template>
 
+<script>
+import store from '@/store'; 
+import { firebase } from '@/firebase';
+import { db, storage } from '@/firebase';
+import moment from 'moment';
+export default {
+  props: ["info"],
+  name:"profil",
+    computed: {
+      proba1() {
+            return moment(this.data.time).fromNow();
+       },
+  },
+  data: function() {
+    
+      
+    return {
+        cards: [],
+        email: "",
+        lozinka: "",
+        noviOpisSlike: "",
+        slikaReference: null,
+        proba: "",
+        url: "",
+        rating: null, //novo
+        
+        };
+    },
+methods:{
+    dohvacanjeProfila()
+        {
+            console.log("firebase dohvat");
+            db.collection("user")
+            .get()
+            .then((query) => {
+                query.forEach((doc) => {
+                    const data = doc.data();
+                    console.log(data);
+                   
+                    this.cards.push({
+                        korisnicko_ime: this.korisnicko_ime, //novo
+                        //lijeva strana -> vue
+                        //desna strana -> firebase
+      
+                    })
+
+                });
+            });
+        },
+    },
+    };
+</script>
 
 <style>
 
