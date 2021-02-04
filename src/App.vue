@@ -1,14 +1,9 @@
 <template>
   <div id="app">
-    <!--<div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
-    <router-view/>
+    
+    <router-view />
   </div>
 </template>
-
-
 
 
 <style lang="scss">
@@ -17,8 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  background-size:cover;
-
+  background-size: cover;
 }
 
 #nav {
@@ -34,3 +28,56 @@
   }
 }
 </style>
+<script>
+import { firebase } from "@/firebase";
+import store from "@/store";
+import { db, storage } from '@/firebase';
+import router from '@/router';
+export default {
+  data: function () {
+    return {
+      store,
+    };
+  },
+  mounted() {
+    
+      firebase.auth().onAuthStateChanged((user) => {
+        const currentRoute = router.currentRoute;
+        if (user) {
+          console.log("Trenutno ulogirani user: ", user.email)
+          db.collection("user")
+            .doc(user.email)
+            .get()
+            .then(function(doc) {
+                if (doc.exists) {
+                    const data = doc.data();
+                    console.log(data)
+                    store.korisnickoIme = data.korisnicko_ime
+                    store.email = data.email,
+                    store.ime_objekta = data.ime_objekta,
+                    store.lokacija = data.lokacija,
+                    store.kontakt = data.kontakt,
+                    console.log(store.korisnickoIme)
+                } 
+                else {
+                    console.log("No such document!");
+                }
+                })
+                .catch(function(error) {
+                    console.log("Error getting document:", error);
+                });
+                console.log("****", user.email);
+                store.currentUser = user.email;
+        } 
+        else {
+            console.log("**** Nema korisnika");
+            store.currentUser = null;
+
+        if(currentRoute.meta.needsUser){
+                router.push({name:'prijava'});
+        }
+        }
+      });
+  }
+};
+</script>
