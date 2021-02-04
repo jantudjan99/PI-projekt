@@ -14,7 +14,7 @@
           <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
           <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone activee">Tips&Tricks</span></a>
           <a href ="/onama" class="razmakni" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
-          <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">Profil</span></a>
+          <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">{{store.korisnickoIme}}</span></a>
 		  <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
       </div>
       </div>
@@ -35,6 +35,7 @@
             <div class="modal-body">
                 <form @submit.prevent="savjeti()" role="form" method="noviSavjeti()" action="">
                     <input type="hidden" name="_token" value="">
+                    <p class="korisnik">{{store.korisnickoIme}}</p>
                     <div class="form-group">
                         <label for="savjeti" class="control-label-naslov">Naslov</label>
                         <div>
@@ -44,29 +45,28 @@
 					<div class="form-group">
                         <label for="savjeti" class="control-label">Savjet ili trik:</label>
                         <div>
-                            <input v-model=" noviOpisSlike" type="text" class="form-control input-lg"  name="noviOpisSlike" id="opisSlike" value="">
+                            <input v-model="noviOpisSlike" type="text" class="form-control input-lg vecePolje"  name="noviOpisSlike" id="opisSlike" value="">
                         </div>
 					</div>
                     
-                       <div class="dodavanje-slike">
+                    <div class="dodavanje-slike">
                         <input type="file" id="dodajsliku" name="fileid" multiple>
                         <croppa :width="400" :height="400" placeholder="Učitaj sliku" v-model="slikaReference"></croppa>
-                        </div>
+                    </div>
                     
                     
                     <div class="form-group">
-                        <div>
-                            <button type="submit" class="btn">
+                        <div><button type="submit" class="btn">
                                 Objavi
                             </button>
                         </div>
                     </div>
                 </form>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
- <section id="blog">
+        </div>
+    </div>
+</div>
+<section id="blog">
       <div class="container">  
                 
         <div class="row">
@@ -75,17 +75,16 @@
                    <div class=" col-lg-12"> 
                     <img class="card-img-top" :src="card.url" />
 					  </div>
+                      <div class="">{{card.imeObjekta}} </div>
 					  <div class="naslov col-lg-12">{{card.NaslovSlike}} </div>
 					  
                      <div class="opis col-lg-12">{{card.opisSlike}}  </div>
-                   				</div>
-					
-
-				
+                     
+                </div>
         </div>     
-    </div>
-    </section>
-	</div>
+        </div>
+</section>
+</div>
 </template>
 
 
@@ -96,32 +95,6 @@ import { db, storage } from '@/firebase';
 import moment from 'moment';
 
 
-function updateParent() {
-    opener.document.parentForm.pf1.value = document.childForm.cf1.value;
-    opener.document.parentForm.pf2.value = document.childForm.cf2.value;
-    if (document.childForm.cf3[0].checked)
-       opener.document.parentForm.pf3[0].checked = true;
-    if (document.childForm.cf3[1].checked)
-       opener.document.parentForm.pf3[1].checked = true;       
-    self.close();
-    return false;
-}
-    
-
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-	  console.log("****",user.email);
-	  store.currentUser=user.email;
-    } else {
-	  console.log('**** Nema korisnika');
-	  store.currentUser=null;
-	  
-	if (router.name !== "prijava") {
-		router.push({ name:"prijava"})
-	}
-     }
-  });
-
 export default {
   props: ["info"],
   name:"savjeti",
@@ -131,10 +104,9 @@ export default {
        },
   },
 
- 
-  
   data: function() {
     return {
+        store,
         cards: [],
         email: "",
         lozinka: "",
@@ -153,9 +125,9 @@ export default {
 
     methods: {
 
-           odjava() {
-      firebase.auth().signOut().then(() =>{
-		this.$router.push({ name: 'prijava' })
+        odjava() {
+            firebase.auth().signOut().then(() =>{
+		    this.$router.push({ name: 'prijava' })
 	  })
     },
  
@@ -175,17 +147,12 @@ export default {
                         time: data.posted_at, 
                         url: data.Url,
 						opisSlike: data.Opis_slike,
-						NaslovSlike:data.NaslovSlike,
-                        //lijeva strana -> vue
-                        //desna strana -> firebase
-      
+                        NaslovSlike:data.NaslovSlike,
+                        imeObjekta:data.imeObjekta,
                     })
-
                 });
             });
         },
-
-// Firebase [{...,...,posted_at},{}]
 
         savjeti() {
             const Opis_slike = this.noviOpisSlike;
@@ -201,8 +168,8 @@ export default {
                 .put(blobData)
                 .then(result => {
 
-                    result.ref.getDownloadURL().then((url) => {
-                    console.log("Javni link", url);
+                result.ref.getDownloadURL().then((url) => {
+                console.log("Javni link", url);
 
             db.collection('savjeti')
                 .add({
@@ -211,6 +178,8 @@ export default {
 					Opis_slike: Opis_slike,
 					NaslovSlike: NaslovSlike,
                     posted_at: Date.now(),
+                    imeObjekta:store.ime_objekta,
+                    
                    
                 })
                 .then((doc) => {
@@ -235,7 +204,7 @@ export default {
             .catch(e => {
                console.error(e)
             });
-                });
+            });
         },
     },
 };
@@ -432,7 +401,7 @@ export default {
     font-size:20px;
     font-family:'Playfair Display', serif ;
     padding-bottom:7.5px;
-    margin-top:70px;
+    margin-top:100px;
     border: 1px solid;
 }
 
@@ -449,7 +418,7 @@ margin-left:9%;
 
 .control-label {
     float: left;
-    margin-left: 1%;
+    margin-left: 0.2%;
     font-family:'Playfair Display', serif ;
 }
 
@@ -531,7 +500,7 @@ margin-left:9%;
 }
 
 .row {
-    background-color:#fcf7f3fd;
+    background-color: rgba(0,0,0,.03);
     margin-top: 3%;
     display: inline-block;
 	text-align: center;
@@ -559,6 +528,17 @@ margin-left:9%;
 	color:rgba(20, 20, 20, 0.877);
 	font-family: 'Playfair Display', serif;
 
+}
+
+.control-label-naslov {
+    font-family:'Playfair Display', serif;
+    margin-left: 0.2%;
+}
+
+.korisnik {
+    font-family:'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 </style>
