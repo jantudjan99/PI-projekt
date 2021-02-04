@@ -1,51 +1,75 @@
+
 <template>
-    <div class="pokusaj">
-      <div class="proba">
+  <div class="pokusaj">
     <div class="hero-image2">
     </div>
-    </div>
     <div class="tekst2">
-    <h1 class="text-center mb-5" >Registracija</h1>
-     <form>
-       <div class="kontejner">
-       <div class="form-group">
-          <label class="forma" for="e-mail">E-mail</label> <br><br>
-          <input v-model="email" type="email" class="form-control" id="emailfield" aria-describedby=""  ><br> 
-        </div>
-        <br> 
-       <div class="form-group">
-          <label class="forma" for="passwordField">Lozinka</label> <br><br>
-          <input v-model="lozinka" type="password" class="form-control" id="passwordField" ><br>
-       </div> <br>
-       
-       <div class="form-group">
-          <label class="forma" for="korisnicko_ime">Korisničko ime</label> <br><br>
-          <input v-model="korisnicko_ime" type="korisnicko_ime" class="form-control" id="userfield" aria-describedby="s"  ><br>
-        </div> <br>
-       <div class="form-group">
-          <label class="forma" for="ime_objekta">Ime objekta</label> <br><br>
-          <input v-model="ime_objekta" type="ime_objekta" class="form-control" id="objectfields" aria-describedby=""  ><br> 
-        </div> <br>
-        <div class="form-group">
-          <label class="forma" for="lokacija">Lokacija</label> <br><br>
-          <input v-model="lokacija" type="text" class="form-control" id="lokacija" aria-describedby=""><br>
-        </div> <br> 
-        <div class="form-group">
-          <label class="forma" for="kontakt">Kontakt</label> <br><br>
-          <input v-model="kontakt" type="text" class="form-control" id="kontakt" aria-describedby=""><br>
-        </div> <br> 
-        <div class="form-group">
-        <a> <button class="registracija" @click="registracija();registracijaForma()" type="button">Registriraj se</button> </a>
-        
-      </div>
-      </div> 
+    <h1 class="text-center mb-5">Registracija</h1>
+      <form>
+        <div class="kontejner">
+
+          <div class="form-group">
+              <label class="forma" for="e-mail">E-mail</label> <br><br>
+              <input v-model="email" type="text" class="form-control" id="email" aria-describedby=""  ><br> 
+          </div><br> 
+
+          <div class="form-group">
+              <label class="forma" for="passwordField">Lozinka</label> <br><br>
+              <input v-model="lozinka" type="password" class="form-control" id="lozinka" ><br>
+          </div> <br>
+          
+          <div class="form-group">
+              <label class="forma" for="korisnicko_ime">Korisničko ime</label> <br><br>
+              <input v-model="korisnicko_ime" type="text" class="form-control" id="korisnicko_ime" aria-describedby="s"  ><br>
+            </div> <br>
+            
+          <div class="form-group">
+              <label class="forma" for="ime_objekta">Ime objekta</label> <br><br>
+              <input v-model="ime_objekta" type="text" class="form-control" id="ime_objekta" aria-describedby=""  ><br> 
+            </div> <br>
+
+            <div class="form-group">
+              <label class="forma" for="lokacija">Lokacija</label> <br><br>
+              <input v-model="lokacija" type="text" class="form-control" id="lokacija" aria-describedby=""><br>
+            </div> <br> 
+
+            <div class="form-group">
+              <label class="forma" for="kontakt">Kontakt</label> <br><br>
+              <input v-model="kontakt" type="text" class="form-control" id="kontakt" aria-describedby=""><br>
+            </div> <br> 
+
+            <div class="form-group">
+            <a> <button class="registracija" type="submit" id="submit" @click="registracija()">Registriraj se</button> </a>
+            </div>
+        </div> 
       </form>
-       <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a>
+      <span id="Required"></span>
+      <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a><br><br> 
       </div>
-      </div>
+    </div>
 </template>
 
 <script>
+jQuery(document).ready(function($){
+            $("#submit").click(function(){
+                let email= $("#email").val();
+                let lozinka = $("#lozinka").val();
+                let korisnickoIme = $("#korisnicko_ime").val();
+                let imeObjekta = $("#ime_objekta").val();
+                let lokacija = $("#lokacija").val();
+                let kontakt = $("#kontakt").val();
+
+                if(email == '' || lozinka == '' || korisnickoIme=='' || imeObjekta=='' || lokacija=='' || kontakt==''){
+                    $("#Required").html("Unesite sve podatke!").css("color","red");
+                }else if(email == "admin" && password == "123"){
+                     $("#form").html('<h4>User Login Successfully</h4><a href="">Back</a>').css('color','green');
+                }else{
+                     $("#error").html("User Are Not Valid");
+                }
+                return false;
+            });
+});
+
 import {firebase} from '@/firebase';
 import { db } from '@/firebase';
 import store from '@/store';
@@ -64,48 +88,38 @@ export default {
   },
 
   methods: {
-    registracija() {
-        
-          firebase 
-            .auth()
-            .createUserWithEmailAndPassword(this.email, this.lozinka)
-            .then(
-            function() {
-             console.log('Uspješna registracija'); 
-             
-             
-            })
-            .catch(function(error) {
-              console.error("Došlo je do greške", error) 
-               
-            });
-            
-            console.log('Nastavak'); 
-            this.$router.replace({ name: 'pocetna'});
-            
-        },
-    registracijaForma () {
-      
-      
-        db.collection("user").add({
+
+  async registracija() {
+    try {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.lozinka);
+
+      const id = this.email;
+
+      db.collection("user")
+        .doc(id)
+        .set({
           korisnicko_ime: this.korisnicko_ime,
           email: this.email,
-          lozinka: this.lozinka,
           lokacija: this.lokacija,
           ime_objekta: this.ime_objekta,
           kontakt: this.kontakt,
-        })
-        .then((doc) => {
-              console.log("Spremljeno", doc)
-          })
-        .catch(function(error){
-        console.error('Došlo je do greške',error);
-      });
-        },
-    },
-};
-        
+        });
 
+      
+      this.$router.replace({ name: 'pocetna'});
+
+    } 
+    catch(error) {
+      
+
+      if ((store.currentUser = null)) this.$router.replace({ name: "registracija" });
+    }
+  }
+    
+  },
+};
     
 </script> 
 
@@ -183,17 +197,6 @@ button:focus {
 .form-group {
   display:inline-block;
   width:100%;
-}
-
-.proba {
-  width:35%;
-  right:0px;
-  min-height: 100%;
-}
-
-.proba2 {
-  position: relative;
-  overflow: hidden;
 }
 
 .tekst2 {
