@@ -1,280 +1,443 @@
 <template>
-<div>
-<div class="hero-image1"></div>
-  <div class="tekst"> 
-    <h1 class="text-center1 mb-5" >Prijava</h1>
-      <form action="#" @submit.prevent="signin" id="form">
-        <div class="kontejner">
-          <div class="form-group">
-              <label class="forma" for="email">Email</label> <br><br>
-              <input v-model="email" type="text" class="form-control" id="name" aria-describedby="emailHelp" ><br><br> 
-          </div><br> 
+    <div>
+    <div class="navigacija">
+        <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+            <img src="assets/logo.png" class="logo">  		
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">		
+                <div class="navbar-nav">
+                    <a href="/pocetna" class="razmakni"><img class="ikone" src="assets/pocetna_.png"><i class="fa"></i><span class="tekst_ikone">Početna</span></a>
+                    <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
+                    <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
+                    <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
+                    <a href="/onama" class="razmakni"><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
+                    <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone activee">{{store.korisnickoIme}}</span></a>
+                    <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
-       <div class="form-group">
-          <label class="forma" for="passwordField">Lozinka</label> 
-          <br><br>
-          <div class="skup">
-            <input v-model="lozinka" type="password" class="form-control"  id="password"> 
-          </div>
-      </div>
-        </div> <br> <br> <br>
-        <div class="form-group">
-          <a> <button type="button" @click="login()" class="prijava" id="submit">Prijava</button > </a><br>
-          <span id="Required"></span>
-          <a href="/registracija" class="NR" to="/registracija"><h5>Niste registrirani?</h5></a>
-        </div>
-    </form>
-  </div>
-</div>
+    <div class="container emp-profile">
+            <form method="post">
+                <div> 
+                    <img class="profilna" src= "/assets/profilna.png" width="250px" height="250px">
+                </div>
+                <div class="row">
+                    <div class="col-md-8"> 
+                        <form @submit.prevent>
+                        <div class="tab-content profile-tab" id="myTabContent" >
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Korisničko ime:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{store.korisnickoIme}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Ime objekta:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{store.ime_objekta}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{store.email}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Kontakt:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{store.kontakt}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Lokacija:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <p>{{store.lokacija}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                
+                                </form>
+                        </div>
+                </div>
+            </form>
+    </div> 
+    </div>
 </template>
+
 <script>
-
-jQuery(document).ready(function($){
-            $("#submit").click(function(){
-                var name= $("#name").val();
-                var password = $("#password").val();
-                if(name == '' || password == ''){
-                    $("#Required").html("Unesite sve podatke!").css("color","red");
-                }else if(name == "admin" && password == "123"){
-                     $("#form").html('<h4>User Login Successfully</h4><a href="">Back</a>').css('color','green');
-                }else{
-                     $("#error").html("User Are Not Valid");
-                }
-                return false;
-            });
-});
+import store from '@/store'; 
 import { firebase } from '@/firebase';
+import { db, storage } from '@/firebase';
+
 export default {
-  name:"prijava",
-  data () {
-    return {
-      email: "",
-      lozinka: "",
-   }
-  },
+    data: function () {
+        return {
+        store,
+        cards: [],
+        };
+    },
 
-  methods: {
-    login () {
-      console.log('login..'+ this.email);
-      console.log(this.$router);
-
-      firebase.auth().signInWithEmailAndPassword(this.email, this.lozinka) .then( (result) => {
-        console.log('Uspješna prijava', result);
-        this.$router.replace({ name: 'pocetna'})
-      })
-      .catch(function (e) {
-        console.error('Greška',e);
-      });
-    }
-  }
+    methods: {
+        odjava() {
+        firebase.auth().signOut().then(() =>{
+            this.$router.push({ name: 'prijava' })
+            })
+        },
+    },
 };
 
-(($) => {
-
-  class Toggle {
-
-    constructor(element, options) {
-
-      this.defaults = {
-        icon: 'fa-eye'
-      };
-
-      this.options = this.assignOptions(options);
-
-      this.$element = element;
-      this.$button = $(`<button class="btn-toggle-pass"><i class="fa ${this.options.icon}"></i></button>`);
-
-      this.init();
-    };
-
-    assignOptions(options) {
-
-      return $.extend({}, this.defaults, options);
-    }
-
-    init() {
-
-      this._appendButton();
-      this.bindEvents();
-    }
-
-    _appendButton() {
-      this.$element.after(this.$button);
-    }
-
-    bindEvents() {
-      this.$button.on('click touchstart', this.handleClick.bind(this));
-    }
-
-    handleClick() {
-
-      let type = this.$element.attr('type');
-      type = type === 'password' ? 'text' : 'password';
-      this.$element.attr('type', type);
-      this.$button.toggleClass('active');
-    }
-  }
-
-  $.fn.togglePassword = function (options) {
-      return this.each(function () {
-      new Toggle($(this), options);
-    });
-  }
-
-})(jQuery);
-
-$(document).ready(function() {
-  $('#password').togglePassword();
-  $('#password-custom').togglePassword({
-  	'icon': 'fa-lock'
-  });
-}) 
-
-</script> 
+</script>
 
 <style>
-.form-control  {
-  border:none;
-  font-size:1.4em;
-  border-bottom:1px solid;
-  display:block;
-  width:100%;
-  border-radius:0px;
-  border-color:black;
-  position: relative;
-}
-.form-control:focus{
-    outline:none !important;
-    outline-width: 0 !important;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    border-color:#c73500a6;
-    caret-color:#c73500a6;
+
+.navbar {
+	color: #fff;
+	background: rgba(1, 1, 1, 0.699) !important;
+	opacity:100%;
+	padding: 5px 16px;
+	border-radius: 0;
+	border: none;
+  	box-shadow: 0 0 4px rgba(0,0,0,.1);
+  	font-family: 'Playfair Display', serif;
+    position: fixed;
+    width:100%;
+    margin-bottom:50px;
+    z-index:99;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+.navbar .ikone {
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	margin-right: 10px;
 }
 
-button:focus {
-  outline:0;
+.navbar .navbar-brand {
+	color: #efe5ff;
+	padding-left: 0px;
+	padding-right: 50px;
+	font-size: 24px;
 }
 
-.forma {
-font-size: 2em;
-float:left;
-color:#000000;
-display:block;
-
+.navbar-nav{
+	padding-left:25px;
+    
 }
 
-.kontejner { 
-  display:inline-block;
-  width:50%;
-  margin:auto;
- 
+.navbar .navbar-brand:hover, .navbar .navbar-brand:focus {
+  color: #fff;
+  opacity:50%;
 }
 
-.text-center1 {
-font-size: 4em;
-margin-top:10%;
-color:black;
+.navbar .navbar-brand i {
+	font-size: 25px;
+  margin-right: 5px;
 }
 
-.prijava {
-  padding: 12px 20px;
-  font-size: 22px;
-  border:none;
-  background-color:#c73500a6;
-  color:black;
-  border-radius: 12px;
-  font-weight: bold;
+.navbar .nav-item i {
+	font-size: 18px;
 }
 
-.hero-image1{
-  background-image: url("/assets/novakava.jpg");
-  width: 33%;
-  position: fixed;
-  left: 0px;
-  min-height: 100%;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-repeat: no-repeat;
+.navbar .nav-item span {
+	position: relative;
+	top: 3px;
 }
 
-
-.form-group{
-  display:inline-block;
-  width:100%;
+.navbar .navbar-nav > a {
+	color: #efe5ff;
+	padding: 8px 15px;
+    font-size: 18px;	
 }
 
-.tekst {
-  width: 67%;
-  position: absolute;
-  right: 0px;
-  height: 100%;
-  font-family: 'Playfair Display', serif;
-  text-align:center;
+.navbar .navbar-nav > a:hover, .navbar .navbar-nav > a:focus {
+	color: #A43323;
+	text-decoration:none;
 }
 
-
-
-.text-center {
-  color:black;
-  border:none;
-  font-size:4em;
-  font-family: 'Playfair Display', serif;
+.navbar .navbar-nav > a > i {
+	display: block;
+	text-align: center;
 }
 
-.NR {
-  color:black;
+.navbar .dropdown-item i {
+	font-size: 16px;
+	min-width: 22px;
 }
 
-.NR:hover {
-  color:black;
-  text-decoration: underline;
+.navbar .dropdown-item .material-icons {
+	font-size: 21px;
+	line-height: 16px;
+	vertical-align: middle;
+	margin-top: -2px;
 }
 
-@media (max-width: 480px) {
-  .hero-image1 {
-     display: none;
+.navbar .nav-item.open > a, .navbar .nav-item.open > a:hover, .navbar .nav-item.open > a:focus {
+	color: #fff;
+	background: none !important;
+}
+
+.navbar .dropdown-menu {
+	border-radius: 1px;
+	border-color: #e5e5e5;
+	box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.navbar .dropdown-menu a {
+	color: #777 !important;
+	padding: 8px 20px;
+	line-height: normal;
+	font-size: 15px;
+}
+
+.navbar .dropdown-menu a:hover, .navbar .dropdown-menu a:focus {
+	color: #333 !important;
+}
+
+.navbar .navbar-nav .active a, .navbar .navbar-nav .active a:hover, .navbar .navbar-nav .active a:focus {
+    color: #fff;
+    text-shadow: 0 0 4px rgba(255,255,255,0.2);
+    text-decoration: none;
+}
+
+.navbar .navbar-nav .user-action {
+	padding: 9px 15px;
+	font-size: 15px;
+}
+
+.navbar .navbar-toggle {
+	border-color: #fff;
+}
+
+.navbar .navbar-toggle .icon-bar {
+	background: #fff;
+}
+
+.navbar .navbar-nav .open .dropdown-menu {
+	background: #faf7fd;
+	border-radius: 1px;
+	border-color: #faf7fd;
+	box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.navbar .divider {
+	background-color: #e9ecef !important;
+}
+
+@media (min-width: 1200px){
+	.form-inline .input-group {
+		width: 350px;
+		margin-left: 30px;
+	}
+}
+
+@media (max-width: 1199px){
+	.navbar .navbar-nav > a > i {
+		display: inline-block;			
+		text-align: left;
+		min-width: 30px;
+		position: relative;
+		top: 4px;
+	}
+	.navbar .navbar-collapse {
+		border: none;
+		box-shadow: none;
+		padding: 0;
+	}
+	.navbar .navbar-form {
+		border: none;			
+		display: block;
+		margin: 10px 0;
+		padding: 0;
+	}
+	.navbar .navbar-nav {
+		margin: 8px 0;
+	}
+	.navbar .navbar-toggle {
+		margin-right: 0;
+	}
+	.input-group {
+		width: 100%;
   }
+  
 }
 
-:root {
-  --info-color: #da532aa1;
+.razmakni{
+  
+    display:inline-flex;
+    margin-left:5px;
 }
 
-.btn-toggle-pass {
-  position: absolute;
-  background: transparent;
-  border:none;
-  right:0px;
-  top:10px;
+.ikone{
+    display: inline-block;
 }
 
-.btn-toggle-pass.active {
-  color: var(--info-color);
+.tekst_ikone{
+	display:inline-block;
+	margin-right:10px;
+	margin-top:8px;
 }
 
-#password {
-  position:absolute;
-  width:100%;
-} 
-
-#form{
-  width:100%;
+.activee{
+	color: #c73500a6;
 }
 
-.skup{
-  position:relative;
-  width:100%;
+.desno {
+	right:0%;
+	position:absolute;
+}
+
+.logo{
+	
+	border-radius: 50%;
+	width: 120px;
+	height: 45px;
+	margin-right: 10px;
+}
+
+.emp-profile{
+    padding: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #ffffff36;
+}
+
+.profile-img{
+    text-align: center;
+    margin-top: 10%;
+    margin-left: -150px;
+}
+
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.profile-rating {
+    font-family:'Playfair Display', serif ;
+    font:20px bolder;
+}
+
+.profile-head h5{
+    color:black;
+}
+
+.profile-head h6{
+    color: #0062cc;
+}
+
+.profile-head {
+    margin-top: 8%;
+    font-family:'Playfair Display', serif ;
+}
+
+.profile-edit-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.profile-work ul{
+    list-style: none;
+}
+
+.profile-tab label{
+    font-weight: 600;
+}
+
+.profile-tab p{
+    font-weight: 600;
+    color: #2b3138;
+}
+
+.tab-content {
+    font-family:'Playfair Display', serif ;
+    font-size: 20px;
+    background-color: rgba(0,0,0,.03);
+    padding: 10px 90px;
+    color: black;
+}
+
+.row {
+    margin:auto;
+}
+
+.profilna {
+    border: solid 2.5px rgb(29, 28, 28);
+    display: inline;
+    float: left;
+}
+
+.container {
+    display: inline-block;
+    margin-left: 120px;
+    padding: 20px;
+    margin-top: 100px;
 }
 
 </style>
