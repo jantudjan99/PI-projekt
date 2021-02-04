@@ -1,19 +1,17 @@
 <template>
     <div>
-    <img class="mutna" src="/assets/mutna.jpg/">
-    <div class="okvir">
+        <img class="mutna" src="/assets/mutna.jpg/">
+        <div class="okvir">
+            <div class="logo12">
+                <img class="logo1" src="/assets/logo1.png">
+                <img class="gif" src="/assets/salica.gif"> 
+            </div> 
 
-    <div class="logo12">
-<img class="logo1" src="/assets/logo1.png">
-<img class="gif" src="/assets/salica.gif"> 
-    </div> 
-
-    <div class="tipke">
-<a href="/prijava" class="prijava1" id="submit">Prijava </a> 
-<a href="/registracija" class="registracija1" id="submit">Registracija </a> 
-    </div>
-
-    </div>
+            <div class="tipke">
+                <a href="/prijava" class="prijava1" id="submit">Prijava </a> 
+                <a href="/registracija" class="registracija1" id="submit">Registracija </a> 
+            </div>
+        </div>
     </div>
 </template>
 
@@ -28,7 +26,6 @@
     border-radius:12px;
     font-family: 'Playfair Display', serif;
     margin:auto;
-    
 }
 
 .prijava1:hover {
@@ -58,7 +55,7 @@
 }
 
 .gif {
-    margin-top: 10px;
+    margin-top: 20px;
     height:10em;
 }
 
@@ -68,7 +65,7 @@
 }
 
 .tipke {
- margin-top: 30px;
+    margin-top: 30px;
 }
 
 .okvir {
@@ -97,17 +94,16 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     overflow: hidden;
-    
     min-width: 100%;
 }
 
 @media (max-width: 1199px) {
-  .gif {
-     display: none;
-  }
-  .okvir{
-     background-color:transparent;
-  }
+    .gif {
+        display: none;
+    }
+    .okvir{
+        background-color:transparent;
+    }
 }
 
 </style>
