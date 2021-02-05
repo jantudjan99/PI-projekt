@@ -126,7 +126,6 @@
 .navbar {
     color: #fff;
     background: rgba(1, 1, 1, 0.699) !important;
-    opacity:100%;
     padding: 5px 16px;
     border-radius: 0;
     border: none;

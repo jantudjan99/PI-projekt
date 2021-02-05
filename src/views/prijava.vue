@@ -142,6 +142,7 @@ $(document).ready(function() {
   border-color:black;
   position: relative;
 }
+
 .form-control:focus{
     outline:none !important;
     outline-width: 0 !important;
