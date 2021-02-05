@@ -3,7 +3,7 @@
 <div class="hero-image1"></div>
   <div class="tekst"> 
     <h1 class="text-center1 mb-5" >Prijava</h1>
-      <form action="#" @submit.prevent="signin" id="form">
+      <form action="#" id="form">
         <div class="kontejner">
           <div class="form-group">
               <label class="forma" for="email">Email</label> <br><br>
@@ -35,8 +35,7 @@ jQuery(document).ready(function($){
                 var password = $("#password").val();
                 if(name == '' || password == ''){
                     $("#Required").html("Unesite sve podatke!").css("color","red");
-                }else if(name == "admin" && password == "123"){
-                     $("#form").html('<h4>User Login Successfully</h4><a href="">Back</a>').css('color','green');
+                
                 }else{
                      $("#error").html("User Are Not Valid");
                 }

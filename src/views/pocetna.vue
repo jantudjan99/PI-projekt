@@ -31,7 +31,7 @@
  import router from '@/router';
 
   export default {
-  name:'app',
+  
   data () {
     return {
       	store,
@@ -45,6 +45,7 @@
 			})
     	},
 	},
+	name:'pocetna',
 };
 
 </script>

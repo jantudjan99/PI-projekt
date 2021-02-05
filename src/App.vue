@@ -74,7 +74,7 @@ export default {
             store.currentUser = null;
 
         if(currentRoute.meta.needsUser){
-                router.push({name:'prijava'});
+            router.push({name:'prijava'});
         }
         }
       });

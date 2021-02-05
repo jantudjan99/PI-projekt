@@ -79,8 +79,8 @@
                     <div class="card-header"> 
                         <img class="card-img-top" :src="card.url" /> 
                         <div class="card-body3"> {{card.time | moment}} </div> 
-                        <div class="card-body2"> {{card.posted_By }} </div> 
-                        <div class="card-body2"> {{card.imeObjekta }} </div> 
+                        <div class="card-body4"> {{card.posted_By }} </div> 
+                        <div class="card-body4"> {{card.imeObjekta }} </div> 
                         <div class="card-body2"> {{card.opisSlike}} </div> 
                         <div v-if="card.rate==1"> <span class="thumb thumbs-up"><i class="fa fa-thumbs-o-up pozitivna" id="pozitivna"></i></span> </div> 
                         <div v-if="card.rate==-1"><span class="thumb thumbs-down"><i class="fa fa-thumbs-o-down negativna"  id="negativna"></i></span> </div> 
@@ -100,8 +100,8 @@ import { db, storage } from '@/firebase';
 import moment from 'moment';
     
 export default {
-    props: ["info", "showcomments"],
-    name:"recenzije",
+    props: ["info"],
+    name:'recenzije',
 
     filters: {
         moment: function(time) {
@@ -538,6 +538,12 @@ margin-left:9%;
 .card-body3 {
     font-size:10px;
     margin-left: 4%;
+}
+
+.card-body4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .card-img-top{

@@ -13,7 +13,7 @@
               <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone">Kupi/Prodaj</span></a>
               <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
               <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
-              <a href ="/onama" class="razmakni" v-class="" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone activee">O nama</span></a>
+              <a href ="/onama" class="razmakni" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone activee">O nama</span></a>
               <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">{{store.korisnickoIme}}</span></a>
               <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
           </div>
@@ -26,8 +26,7 @@
       strane skupine studenata Fakulteta Informatike u Puli.
       U Cafetell-u, naši korisnici, mogu kupovati ili nabavljati rabljene predmete iz kafića, davati savjete ili dijeliti trikove
       koje su stekli kroz svoje godine poslovanja. Nakraju, omogućujemo i recenziranje različitih proizvoda i usluga s kojima se vlasnici susreću,
-      te na taj način mogu upozoriti ostale na loše usluge i proizvode ili, suprotno, pohvaliti te predložiti korisne informacije o istima.  
-    </p>
+      te na taj način mogu upozoriti ostale na loše usluge i proizvode ili, suprotno, pohvaliti te predložiti korisne informacije o istima. </p>
 
     <h1 class="naslov">Naš tim</h1>
     <div class="tim">
@@ -105,16 +104,16 @@
  import router from '@/router';
 
   export default {
-  name:'app',
+  name:'onama',
   data () {
     return {
       store,
-   };
+    };
   },
   methods: {
     odjava() {
       firebase.auth().signOut().then(() =>{
-		this.$router.push({ name: 'prijava' })
+		  this.$router.push({ name: 'prijava' })
 	  })
     },
   },

@@ -12,7 +12,7 @@
               <a href="/kupiprodaj" class="razmakni"><img class="ikone" src="assets/kupiprodaj.png"><i class="fa"></i><span class="tekst_ikone activee">Kupi/Prodaj</span></a>
               <a href="/recenzije" class="razmakni"><img class="ikone" src="assets/recenzije_.png"><i class="fa"></i><span class="tekst_ikone">Recenzije</span></a>
               <a href="/tips_tricks" class="razmakni"><img class="ikone" src="assets/tips&tricks_.png"><i class="fa"></i><span class="tekst_ikone">Tips&Tricks</span></a>
-              <a href ="/onama" class="razmakni" v-class="" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
+              <a href ="/onama" class="razmakni" ><img class="ikone" src="assets/onama_.png"><i class="fa "></i><span class="tekst_ikone">O nama</span></a>
               <a href="/profil" class="razmakni"><img class="ikone" src="assets/profil_.png"><i class="fa"></i><span class="tekst_ikone">{{store.korisnickoIme}}</span></a>
               <a href="#" @click.prevent="odjava()" class="razmakni desno"><img class="ikone" src="assets/odjava.png"><i class="fa"></i><span class="tekst_ikone">Odjava</span></a>
           </div>
@@ -31,7 +31,7 @@
             <h1 class="modal-title">Dodavanje proizvoda</h1>
           </div>
             <div class="modal-body">
-              <form @submit="objave()" role="form" method="novaObjava()" action="">
+              <form @submit.prevent="objave();noveObjave()" role="form" method="novaObjava()" action="">
                 <p class="korisnik1">{{store.korisnickoIme}}</p>
                 <input type="hidden" name="_token" value="" />
 
@@ -85,7 +85,7 @@
 
                 <div class="form-group">
                   <div>
-                    <a><button type="submit" class="btn">Objavi</button></a>
+                    <button type="submit" class="btn">Objavi</button>
                   </div>
                 </div>
 
@@ -103,9 +103,10 @@
               <div class="card-header">
                 <img class="card-img-top" :src="card.url" />
               </div>
-              <div class="card-body3">{{ card.time | moment}}</div>
-              <div class="card-body2">{{ card.opisSlike }}</div>
-              <div class="card-body2">{{ card.imeObjekta}}</div>
+              <div class="card-body3">{{ card.time | moment}}</div> 
+              <div class="card-body2">{{ card.imeObjekta}}</div><br>
+              <div class="card-body4">{{ card.opisSlike }}</div><br>
+              <div class="card-body1">Kontakt: {{ card.kontakt }}</div>
               <div class="card-body1">Cijena: {{ card.novaCijena }}</div>
               <div class="card-body1">Stanje: {{ card.stanje }}</div>
               <div class="card-body1">Lokacija: {{ card.imeLokacije }}</div>
@@ -122,9 +123,10 @@ import { firebase } from "@/firebase";
 import { db, storage } from "@/firebase";
 import moment from "moment";
 
+
 export default {
   props: ["info"],
-  name: "kupiprodaj",
+  name: 'kupiprodaj',
 
   data: function () {
     let docs;
@@ -579,13 +581,23 @@ section {
 
 .card-body2 {
   font-family: "Playfair Display", serif;
-  font-size: 18px;
-  text-align: center;
+  font-size: 15px;
+  margin-left: 10px;
+  font-weight: bold;
 }
 
 .card-body3 {
-    font-size:10px;
-    margin-left: 4%;
+    font-size:12px;
+    margin-left: 3%;
+
+}
+
+.card-body4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 20px;
 }
 
 .card-img-top {

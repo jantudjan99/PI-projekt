@@ -1,3 +1,7 @@
 export default {
-    currentUser:null,
+    currentUser:null, //email
+    korisnickoIme: "",
+    ime_objekta: "",
+    lokacija: "",
+    kontakt: "",
 };

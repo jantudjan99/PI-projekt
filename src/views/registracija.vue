@@ -61,8 +61,6 @@ jQuery(document).ready(function($){
 
                 if(email == '' || lozinka == '' || korisnickoIme=='' || imeObjekta=='' || lokacija=='' || kontakt==''){
                     $("#Required").html("Unesite sve podatke!").css("color","red");
-                }else if(email == "admin" && password == "123"){
-                     $("#form").html('<h4>User Login Successfully</h4><a href="">Back</a>').css('color','green');
                 }else{
                      $("#error").html("User Are Not Valid");
                 }
@@ -75,6 +73,7 @@ import { db } from '@/firebase';
 import store from '@/store';
 
 export default {
+  name:'registracija',
   data: function () {
     return {
       store,
@@ -113,7 +112,6 @@ export default {
     } 
     catch(error) {
       
-
       if ((store.currentUser = null)) this.$router.replace({ name: "registracija" });
     }
   }
@@ -200,13 +198,13 @@ button:focus {
 }
 
 .tekst2 {
- width: 67%;
- position: absolute;
- left: 0px;
- height: 100%;
- font-family: 'Playfair Display', serif;
- font-size: 15px;
- text-align:center;
+  width: 67%;
+  position: absolute;
+  left: 0px;
+  height: 100%;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  text-align:center;
 }
 
 .NR {
@@ -221,7 +219,7 @@ button:focus {
 
 @media (max-width: 480px) {
   .hero-image2 {
-     display: none;
+    display: none;
   }
 }
 

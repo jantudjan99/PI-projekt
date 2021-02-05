@@ -30,7 +30,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title">Dodavanje savjeta</h1>
+                <h1 class="modal-title">Dodavanje savjeta</h1><br>
             </div>
             <div class="modal-body">
                 <form @submit.prevent="savjeti()" role="form" method="noviSavjeti()" action="">
@@ -97,7 +97,7 @@ import moment from 'moment';
 
 export default {
   props: ["info"],
-  name:"savjeti",
+  name:"tips_tricks",
     computed: {
       proba1() {
             return moment(this.data.time).fromNow();
@@ -504,12 +504,10 @@ margin-left:9%;
     margin-top: 3%;
     display: inline-block;
 	text-align: center;
-	
 }
 
 .col-xs-12 {
 		display: inline-block;
-		
 }
 
 

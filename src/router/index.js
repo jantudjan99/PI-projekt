@@ -81,32 +81,13 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  linkActiveClass:'is-active',
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
-/*const handleUpload = () =>{ const uploadTask = storage.ref('images/${image.name}').put(image); 
-  uploadTask.on( 
-      "state changed", 
-      snapshot => {}, 
-      error => { console.log(error); 
-    },
-    () => { 
-        storage 
-        .ref("Objave") 
-        .child(image.name) 
-        .getDownloadURL() 
-        .then(url => { // console.log(url); 
-  }); 
-    }
-  );
-};*/
 
 router.beforeEach((to, from, next)=>{
-
-
   next();
 })
 

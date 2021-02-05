@@ -87,6 +87,7 @@ import { firebase } from '@/firebase';
 import { db, storage } from '@/firebase';
 
 export default {
+    name:'profil',
     data: function () {
         return {
         store,
