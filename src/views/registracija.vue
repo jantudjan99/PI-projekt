@@ -179,7 +179,7 @@ button:focus {
 }
 
 .hero-image2 {
-  background-image: url("/assets/kava.jpeg");
+  background-image: url("/assets/kava.JPEG");
   width:34%;
   right: 0px;
   position: fixed;
