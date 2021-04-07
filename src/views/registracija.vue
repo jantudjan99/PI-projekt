@@ -1,55 +1,34 @@
-
 <template>
-  <div class="pokusaj">
-    <div class="hero-image2">
+<div>
+<div class="login-box">
+  <h2>Registracija</h2>
+  <form>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>Korisničko ime</label>
     </div>
-    <div class="tekst2">
-    <h1 class="text-center mb-5">Registracija</h1>
-      <form>
-        <div class="kontejner">
-
-          <div class="form-group">
-              <label class="forma" for="e-mail">E-mail</label> <br><br>
-              <input v-model="email" type="text" class="form-control" id="email" aria-describedby=""  ><br> 
-          </div><br> 
-
-          <div class="form-group">
-              <label class="forma" for="passwordField">Lozinka</label> <br><br>
-              <input v-model="lozinka" type="password" class="form-control" id="lozinka" ><br>
-          </div> <br>
-          
-          <div class="form-group">
-              <label class="forma" for="korisnicko_ime">Korisničko ime</label> <br><br>
-              <input v-model="korisnicko_ime" type="text" class="form-control" id="korisnicko_ime" aria-describedby="s"  ><br>
-            </div> <br>
-            
-          <div class="form-group">
-              <label class="forma" for="ime_objekta">Ime objekta</label> <br><br>
-              <input v-model="ime_objekta" type="text" class="form-control" id="ime_objekta" aria-describedby=""  ><br> 
-            </div> <br>
-
-            <div class="form-group">
-              <label class="forma" for="lokacija">Lokacija</label> <br><br>
-              <input v-model="lokacija" type="text" class="form-control" id="lokacija" aria-describedby=""><br>
-            </div> <br> 
-
-            <div class="form-group">
-              <label class="forma" for="kontakt">Kontakt</label> <br><br>
-              <input v-model="kontakt" type="text" class="form-control" id="kontakt" aria-describedby=""><br>
-            </div> <br> 
-
-            <div class="form-group">
-            <a> <button class="registracija" type="submit" id="submit" @click="registracija()">Registriraj se</button> </a>
-            </div>
-        </div> 
-      </form>
-      <span id="Required"></span>
-      <a href="/prijava"><h5 class="NR">Već ste registrirani?</h5></a><br><br> 
-      </div>
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>Email</label>
     </div>
+    <div class="user-box">
+      <input type="password" name="" required="">
+      <label>Lozinka</label>
+    </div>
+    <a href="#">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Registriraj se
+    </a>
+  </form>
+</div>
+</div>
 </template>
 
 <script>
+/*
 jQuery(document).ready(function($){
             $("#submit").click(function(){
                 let email= $("#email").val();
@@ -118,117 +97,177 @@ export default {
     
   },
 };
-    
+  */  
 </script> 
 
 
 
 <style>
-
-.form-control  {
-  border:none;
-  border-bottom:1px solid;
-  font-size:1.4em;
-  display:block;
-  width:100%;
-  border-radius:0px;
-  border-color:black;
-}
-
-.form-control:focus{
-    outline:none !important;
-    outline-width: 0 !important;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    border-color:#c73500a6;
-    caret-color:#c73500a6;
-}
-
-button:focus {
-  outline:0;
-}
-
-.forma {
-  font-size: 2em;
-  color:#000000;
-  display:block;
-  position:absolute;
-}
-
-.kontejner { 
-  display:inline-block;
-  width:50%;
-  margin:auto;
-}
-
-.text-center {
-  font-size: 3.2em;
-  margin-top:5%;
-  color:black;
-}
-
-.registracija {
-  padding: 12px 20px;
-  font-size: 20px;
-  border:none;
-  background-color:#c73500a6;
-  color:black;
-  border-radius: 12px;
-  font-weight: bold;
-}
-
-.hero-image2 {
-  background-image: url("/assets/kava.JPEG");
-  width:34%;
-  right: 0px;
-  position: fixed;
-  min-height: 100%;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-repeat: no-repeat;
-  bottom:0px;
-}
-
-.form-group {
-  display:inline-block;
-  width:100%;
-}
-
-.tekst2 {
-  width: 67%;
-  position: absolute;
-  left: 0px;
+html {
   height: 100%;
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  text-align:center;
+}
+body {
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  background: rgb(255, 240, 30);
 }
 
-.NR {
-  color:black;
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: black;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
 }
 
-.NR:hover {
-  color:black;
-  text-decoration: underline;
+.login-box h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: white;
+  text-align: center;
 }
 
+.login-box .user-box {
+  position: relative;
+}
 
-@media (max-width: 480px) {
-  .hero-image2 {
-    display: none;
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.login-box .user-box label {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: white;
+  font-size: 12px;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: yellow;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  margin-top: 40px;
+  letter-spacing: 4px
+}
+
+.login-box a:hover {
+  background:yellow;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px yellow,
+              0 0 25px yellow,
+              0 0 50px yellow,
+              0 0 100px yellow;
+}
+
+.login-box a span {
+  position: absolute;
+  display: block;
+}
+
+.login-box a span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, yellow);
+  animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+  50%,100% {
+    left: 100%;
   }
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+.login-box a span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, yellow);
+  animation: btn-anim2 1s linear infinite;
+  animation-delay: .45s
 }
 
-</style>
+@keyframes btn-anim2 {
+  0% {
+    top: -100%;
+  }
+  50%,100% {
+    top: 100%;
+  }
+}
 
+.login-box a span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, yellow);
+  animation: btn-anim3 1s linear infinite;
+  animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+  0% {
+    right: -100%;
+  }
+  50%,100% {
+    right: 100%;
+  }
+}
+
+.login-box a span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent,yellow);
+  animation: btn-anim4 1s linear infinite;
+  animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+  0% {
+    bottom: -100%;
+  }
+  50%,100% {
+    bottom: 100%;
+  }
+}
+</style>

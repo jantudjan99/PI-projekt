@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Prva from '../views/prva.vue'
+import Pocetna from '../views/pocetna.vue'
 import store from "@/store"
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'prva',
-    component: Prva
+    name: 'pocetna',
+    component: Pocetna
   },
 
   {
@@ -17,6 +17,12 @@ const routes = [
     component: () => import('../views/registracija.vue')
   },
   {
+    path: '/prijava',
+    name: 'prijava',
+    component: () => import( '../views/prijava.vue'),
+  
+    },
+  {
     path: '/pocetna',
     name: 'pocetna',
     component: () => import( '../views/pocetna.vue'),
@@ -24,59 +30,6 @@ const routes = [
       needsUser: true
     }
   },
-  {
-  path: '/onama',
-  name: 'onama',
-  component: () => import('../views/onama.vue'),
-  meta: {
-    needsUser: true
-  }
-},
-  
-{
-  path: '/prijava',
-  name: 'prijava',
-  component: () => import('../views/prijava.vue'),
-},
-
-{
-  path: '/kupiprodaj',
-  name: 'kupiprodaj',
-  component: () => import('../views/kupiprodaj.vue'),
-  meta: {
-    needsUser: true
-  }
-},
-
-{
-  path: '/recenzije',
-  name: 'recenzije',
-
-  component: () => import( '../views/recenzije.vue'),
-  meta: {
-    needsUser: true
-  }
-},
-
-{
-  path: '/tips_tricks',
-  name: 'tips_tricks',
-
-  component: () => import('../views/tips_tricks.vue'),
-  meta: {
-    needsUser: true
-  }
-},
-
-{
-  path: '/profil',
-  name: 'profil',
-  component: () => import( '../views/profil.vue'),
-  meta: {
-    needsUser: true
-  }
-}
-
 
 ]
 
